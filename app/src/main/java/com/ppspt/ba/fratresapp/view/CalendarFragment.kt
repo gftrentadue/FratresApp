@@ -1,4 +1,4 @@
-package com.ppspt.ba.fratresapp.ui.main
+package com.ppspt.ba.fratresapp.view
 
 import android.graphics.Color
 import android.os.Bundle
@@ -9,29 +9,30 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.applandeo.materialcalendarview.EventDay
 import com.ppspt.ba.fratresapp.R
-import kotlinx.android.synthetic.main.main_fragment.*
+import com.ppspt.ba.fratresapp.viewmodel.CalendarViewModel
+import kotlinx.android.synthetic.main.calendar_fragment.*
 import java.util.*
 
-class MainFragment : Fragment() {
+class CalendarFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = CalendarFragment()
     }
 
     private val TAG = this::class.java.simpleName
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: CalendarViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.calendar_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(CalendarViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
