@@ -2,6 +2,7 @@ package com.ppspt.ba.fratresapp.view
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.applandeo.materialcalendarview.EventDay
 import com.ppspt.ba.fratresapp.R
 import com.ppspt.ba.fratresapp.viewmodel.CalendarViewModel
 import kotlinx.android.synthetic.main.calendar_fragment.*
+import java.sql.Time
 import java.util.*
 
 class CalendarFragment : Fragment() {
@@ -44,15 +46,23 @@ class CalendarFragment : Fragment() {
     private fun initCalendar() {
         // TODO: get donation date from server as arraylist
         val events = arrayListOf<EventDay>()
+        val highlightsDay = arrayListOf<Calendar>()
+
         for (x in 3 until 30 step 7){
             val date = Calendar.getInstance(TimeZone.getDefault(), Locale.ITALIAN)
 
             date[Calendar.DAY_OF_MONTH] = x
 
-            events.add(EventDay(date, R.drawable.ic_icon_heart_red, Color.RED))
+            events.add(EventDay(date, R.drawable.ic_icon_heart_red))
+            highlightsDay.add(date)
         }
 
         calendarView.setEvents(events)
+        calendarView.setHighlightedDays(highlightsDay)
+
+        calendarView.setOnDayClickListener { eventDay ->
+            Log.d(TAG, "${eventDay.calendar.get(Calendar.DAY_OF_MONTH)}")
+        }
     }
 
 }
