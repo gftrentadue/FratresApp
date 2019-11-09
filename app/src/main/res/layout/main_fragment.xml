@@ -8,11 +8,12 @@
     tools:context=".ui.main.MainFragment">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -22,17 +23,22 @@
                 android:id="@+id/mainToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:title="@string/app_name"/>
+                app:title="@string/app_name" />
         </com.google.android.material.appbar.AppBarLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <CalendarView
+    <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/calendarView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:firstDayOfWeek="1"
+        android:layout_height="0dp"
+        app:forwardButtonSrc="@drawable/ic_keyboard_arrow_right_black"
+        app:headerColor="@color/colorWhite"
+        app:headerLabelColor="@color/colorBlack"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+        app:previousButtonSrc="@drawable/ic_keyboard_arrow_left_black">
+
+    </com.applandeo.materialcalendarview.CalendarView>
 </androidx.constraintlayout.widget.ConstraintLayout>
