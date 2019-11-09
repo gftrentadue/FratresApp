@@ -18,10 +18,12 @@ import java.util.*
 class CalendarFragment : Fragment() {
 
     companion object {
+        val TAG = this::class.java.simpleName
+
         fun newInstance() = CalendarFragment()
     }
 
-    private val TAG = this::class.java.simpleName
+
 
     private lateinit var viewModel: CalendarViewModel
 
