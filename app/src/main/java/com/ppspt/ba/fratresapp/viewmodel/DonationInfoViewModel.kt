@@ -1,4 +1,4 @@
-package com.ppspt.ba.fratresapp.view
+package com.ppspt.ba.fratresapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 

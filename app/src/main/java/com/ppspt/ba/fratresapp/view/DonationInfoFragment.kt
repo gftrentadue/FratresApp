@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.navigation.fragment.navArgs
 import com.ppspt.ba.fratresapp.R
+import com.ppspt.ba.fratresapp.viewmodel.DonationInfoViewModel
 
 class DonationInfoFragment : Fragment() {
+    private val args: DonationInfoFragmentArgs by navArgs()
 
     companion object {
         fun newInstance() = DonationInfoFragment()

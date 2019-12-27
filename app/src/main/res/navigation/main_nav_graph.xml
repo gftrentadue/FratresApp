@@ -6,8 +6,29 @@
     app:startDestination="@id/calendarFragment">
 
     <fragment
+        android:id="@+id/donationInfoFragment"
+        android:name="com.ppspt.ba.fratresapp.view.DonationInfoFragment"
+        android:label="fragment_donation_info"
+        tools:layout="@layout/donation_info_fragment" >
+
+        <argument android:name="donationDate"
+            app:nullable="false"
+            android:defaultValue="EMPTY"/>
+    </fragment>
+
+    <fragment
         android:id="@+id/calendarFragment"
         android:name="com.ppspt.ba.fratresapp.view.CalendarFragment"
-        android:label="calendar_fragment"
-        tools:layout="@layout/calendar_fragment" />
+        android:label="fragment_calendar"
+        tools:layout="@layout/calendar_fragment" >
+        <action android:id="@+id/action_Calendar_to_DonationInfo"
+            app:destination="@id/donationInfoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" >
+
+            <argument android:name="donationDate"
+                app:nullable="false"
+                android:defaultValue="EMPTY"/>
+        </action>
+
+    </fragment>
 </navigation>
