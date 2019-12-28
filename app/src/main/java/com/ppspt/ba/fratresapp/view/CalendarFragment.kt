@@ -61,7 +61,13 @@ class CalendarFragment : Fragment() {
         calendarView.setOnDayClickListener { eventDay ->
             Log.d(TAG, "${eventDay.calendar.get(Calendar.DAY_OF_MONTH)}")
 
-            findNavController().navigate(CalendarFragmentDirections.actionCalendarToDonationInfo("blablabla"))
+            if (events.indexOf(eventDay) != -1){
+                val date = "${eventDay.calendar.get(Calendar.DAY_OF_MONTH)}/${eventDay.calendar.get(Calendar.MONTH)}/${eventDay.calendar.get(Calendar.YEAR)}"
+
+                findNavController().navigate(CalendarFragmentDirections.actionCalendarToDonationInfo(date))
+            } else {
+                Log.d(TAG, "Is not a donation day!")
+            }
         }
     }
 

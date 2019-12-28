@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.ppspt.ba.fratresapp.R
 import com.ppspt.ba.fratresapp.viewmodel.DonationInfoViewModel
+import kotlinx.android.synthetic.main.donation_info_fragment.*
 
 class DonationInfoFragment : Fragment() {
     private val args: DonationInfoFragmentArgs by navArgs()
@@ -30,6 +31,13 @@ class DonationInfoFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(DonationInfoViewModel::class.java)
         // TODO: Use the ViewModel
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val date = args.donationDate
+        dateTextView.text = date
     }
 
 }
