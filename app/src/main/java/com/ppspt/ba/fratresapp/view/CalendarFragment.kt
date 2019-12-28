@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.applandeo.materialcalendarview.EventDay
 import com.ppspt.ba.fratresapp.R
 import com.ppspt.ba.fratresapp.viewmodel.CalendarViewModel
@@ -14,9 +15,9 @@ import kotlinx.android.synthetic.main.calendar_fragment.*
 import java.util.*
 
 class CalendarFragment : Fragment() {
-    companion object {
-        val TAG = this::class.java.simpleName
+    private val TAG = this::class.java.simpleName
 
+    companion object {
         fun newInstance() = CalendarFragment()
     }
 
@@ -59,6 +60,8 @@ class CalendarFragment : Fragment() {
 
         calendarView.setOnDayClickListener { eventDay ->
             Log.d(TAG, "${eventDay.calendar.get(Calendar.DAY_OF_MONTH)}")
+
+            findNavController().navigate(CalendarFragmentDirections.actionCalendarToDonationInfo("blablabla"))
         }
     }
 
