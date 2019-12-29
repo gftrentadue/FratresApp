@@ -27,19 +27,14 @@
         </com.google.android.material.appbar.AppBarLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <com.applandeo.materialcalendarview.CalendarView
+    <com.ppspt.ba.fratresapp.custom_view.DonationCalendar
         android:id="@+id/calendarView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:forwardButtonSrc="@drawable/ic_keyboard_arrow_right_black"
-        app:headerColor="@color/colorWhite"
-        app:headerLabelColor="@color/colorBlack"
-        app:highlightedDaysLabelsColor="@color/colorHeartRed"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
-        app:previousButtonSrc="@drawable/ic_keyboard_arrow_left_black">
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout" />
 
-    </com.applandeo.materialcalendarview.CalendarView>
 </androidx.constraintlayout.widget.ConstraintLayout>

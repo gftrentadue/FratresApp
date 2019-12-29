@@ -1,14 +1,11 @@
 package com.ppspt.ba.fratresapp.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
-import com.applandeo.materialcalendarview.EventDay
 import com.ppspt.ba.fratresapp.R
 import com.ppspt.ba.fratresapp.viewmodel.CalendarViewModel
 import kotlinx.android.synthetic.main.calendar_fragment.*
@@ -38,10 +35,20 @@ class CalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initCalendar()
+        val donationDays = arrayListOf<Date>()
+
+        for (x in 1 until 31 step 14) {
+            val date = Calendar.getInstance(TimeZone.getDefault(), Locale.ITALIAN)
+
+            date[Calendar.DAY_OF_MONTH] = x
+
+            donationDays.add(date.time)
+        }
+
+        calendarView.setDonationDays(donationDays)
     }
 
-    private fun initCalendar() {
+    /*private fun initCalendar() {
         // TODO: get donation date from server as arraylist
         val events = arrayListOf<EventDay>()
         val highlightsDay = arrayListOf<Calendar>()
@@ -69,6 +76,6 @@ class CalendarFragment : Fragment() {
                 Log.d(TAG, "Is not a donation day!")
             }
         }
-    }
+    }*/
 
 }

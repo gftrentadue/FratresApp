@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">FratresApp</string>
+    <string name="donation_calendar_monday_label">Lu</string>
+    <string name="donation_calendar_tuesday_label">Ma</string>
+    <string name="donation_calendar_wednesday_label">Me</string>
+    <string name="donation_calendar_thursday_label">Gi</string>
+    <string name="donation_calendar_friday_label">Ve</string>
+    <string name="donation_calendar_saturday_label">Sa</string>
+    <string name="donation_calendar_sunday_label">Do</string>
 </resources>
