@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ppspt.ba.fratresapp.R
-import com.ppspt.ba.fratresapp.domain.donation_calendar.adapter.DonationCalendarAdapter
+import com.ppspt.ba.fratresapp.domain.donation_calendar.adapter.CalendarDayAdapter
 import java.util.*
-import kotlin.collections.ArrayList
 
 class DonationCalendar(context: Context, attributeSet: AttributeSet) :
     ConstraintLayout(context, attributeSet) {
@@ -20,15 +20,15 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
     private lateinit var nextMonthArrow: AppCompatImageView
     private lateinit var daysGrid: RecyclerView
 
-    private lateinit var daysAdapter: DonationCalendarAdapter
+    private lateinit var daysAdapter: CalendarDayAdapter
 
-    private val calendarToShow: Calendar
+    private val calendarToShow: Calendar =
+        Calendar.getInstance(TimeZone.getDefault(), Locale.ITALIAN)
 
     private val daysList = arrayListOf<Date>()
     private var donationDaysList = arrayListOf<Date>()
 
     init {
-        calendarToShow = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault())
 
         initLayout(context)
 
@@ -41,34 +41,42 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
         monthTextView = layout.findViewById(R.id.monthTextView)
         previousMonthArrow = layout.findViewById(R.id.previousArrowImage)
         previousMonthArrow.setOnClickListener {
-            Log.d("DonationCalendar", "Previous month pressed")
-            val currentMonth = calendarToShow.get(Calendar.MONTH)
+            var currentMonth = calendarToShow.get(Calendar.MONTH) - 1
+            var currentYear = calendarToShow.get(Calendar.YEAR)
 
             if (currentMonth == 0){
-                val currentYear = calendarToShow.get(Calendar.YEAR)
-                calendarToShow.set(Calendar.MONTH, 11)
-                calendarToShow.set(Calendar.YEAR, currentYear - 1)
+                currentMonth = 11
+                currentYear--
+                calendarToShow.set(Calendar.YEAR, currentYear)
             } else {
-                calendarToShow.set(Calendar.MONTH, currentMonth - 1)
+                currentMonth--
             }
 
+            calendarToShow.set(Calendar.MONTH, currentMonth)
+
             initCalendar()
+            daysAdapter.setDaysMonth(daysList, currentMonth, currentYear)
         }
+
         nextMonthArrow = layout.findViewById(R.id.nextArrowImage)
         nextMonthArrow.setOnClickListener {
-            Log.d("DonationCalendar", "Next month pressed")
-            val currentMonth = calendarToShow.get(Calendar.MONTH)
+            var currentMonth = calendarToShow.get(Calendar.MONTH) - 1
+            var currentYear = calendarToShow.get(Calendar.YEAR)
 
             if (currentMonth == 11){
-                val currentYear = calendarToShow.get(Calendar.YEAR)
-                calendarToShow.set(Calendar.MONTH, 0)
-                calendarToShow.set(Calendar.YEAR, currentYear + 1)
+                currentMonth = 0
+                currentYear++
+                calendarToShow.set(Calendar.YEAR, currentYear)
             } else {
-                calendarToShow.set(Calendar.MONTH, currentMonth + 1)
+                currentMonth++
             }
 
+            calendarToShow.set(Calendar.MONTH, currentMonth)
+
             initCalendar()
+            daysAdapter.setDaysMonth(daysList, currentMonth, currentYear)
         }
+
         daysGrid = layout.findViewById(R.id.daysGrid)
     }
 
@@ -78,23 +86,33 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
         val month = calendarToShow.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
         monthTextView.text = month.toUpperCase(Locale.getDefault())
 
-        val previousWeekMondayOffset = 7 - calendarToShow.get(Calendar.DAY_OF_WEEK)
+        val previousWeekMondayOffset: Int = if (calendarToShow.get(Calendar.DAY_OF_WEEK) == 1)
+            -6
+        else
+            Calendar.MONDAY - calendarToShow.get(Calendar.DAY_OF_WEEK)
+
         val lastMonthDay = calendarToShow.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-        calendarToShow.add(Calendar.DAY_OF_MONTH, -previousWeekMondayOffset)
+        calendarToShow.add(Calendar.DAY_OF_MONTH, previousWeekMondayOffset)
 
-        for (i in 0 until previousWeekMondayOffset + lastMonthDay){
+        daysList.clear()
+
+        for (i in 0 until -previousWeekMondayOffset + lastMonthDay) {
             daysList.add(calendarToShow.time)
             calendarToShow.add(Calendar.DAY_OF_MONTH, 1)
         }
     }
 
-    fun setDonationDays(list: ArrayList<Date>){
+    fun initDonationDays(list: ArrayList<Date>) {
+        donationDaysList.clear()
         donationDaysList.addAll(list)
 
-        daysAdapter = DonationCalendarAdapter(context, daysList, donationDaysList){
+        daysAdapter = CalendarDayAdapter(context, daysList, donationDaysList) {
             Log.d("DAY", "Tap on ${daysList[it]}")
         }
+
+        val layoutManager = GridLayoutManager(context, 7, GridLayoutManager.VERTICAL, false)
+        daysGrid.layoutManager = layoutManager
 
         daysGrid.adapter = daysAdapter
     }

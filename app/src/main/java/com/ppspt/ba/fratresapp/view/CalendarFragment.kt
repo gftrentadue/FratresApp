@@ -37,7 +37,7 @@ class CalendarFragment : Fragment() {
 
         val donationDays = arrayListOf<Date>()
 
-        for (x in 1 until 31 step 14) {
+        for (x in 5 until 31 step 14) {
             val date = Calendar.getInstance(TimeZone.getDefault(), Locale.ITALIAN)
 
             date[Calendar.DAY_OF_MONTH] = x
@@ -45,37 +45,7 @@ class CalendarFragment : Fragment() {
             donationDays.add(date.time)
         }
 
-        calendarView.setDonationDays(donationDays)
+        calendarView.initDonationDays(donationDays)
     }
-
-    /*private fun initCalendar() {
-        // TODO: get donation date from server as arraylist
-        val events = arrayListOf<EventDay>()
-        val highlightsDay = arrayListOf<Calendar>()
-
-        for (x in 8 until 31 step 7) {
-            val date = Calendar.getInstance(TimeZone.getDefault(), Locale.ITALIAN)
-
-            date[Calendar.DAY_OF_MONTH] = x
-
-            events.add(EventDay(date, R.drawable.ic_icon_heart_red))
-            highlightsDay.add(date)
-        }
-
-        calendarView.setEvents(events)
-        calendarView.setHighlightedDays(highlightsDay)
-
-        calendarView.setOnDayClickListener { eventDay ->
-            Log.d(TAG, "${eventDay.calendar.get(Calendar.DAY_OF_MONTH)}")
-
-            if (events.indexOf(eventDay) != -1){
-                val date = "${eventDay.calendar.get(Calendar.DAY_OF_MONTH)}/${eventDay.calendar.get(Calendar.MONTH)}/${eventDay.calendar.get(Calendar.YEAR)}"
-
-                findNavController().navigate(CalendarFragmentDirections.actionCalendarToDonationInfo(date))
-            } else {
-                Log.d(TAG, "Is not a donation day!")
-            }
-        }
-    }*/
 
 }

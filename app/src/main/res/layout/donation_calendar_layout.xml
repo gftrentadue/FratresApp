@@ -31,8 +31,8 @@
             android:layout_height="wrap_content"
             android:text="GENNAIO"
             android:textAlignment="center"
-            android:textStyle="bold"
             android:textColor="@color/colorBlack"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/nextArrowImage"
             app:layout_constraintStart_toEndOf="@id/previousArrowImage"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,102 +49,82 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/weekDaysBarLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="4dp"
+        app:layout_constraintEnd_toEndOf="@id/daysGrid"
+        app:layout_constraintStart_toStartOf="@id/daysGrid"
         app:layout_constraintTop_toBottomOf="@id/monthBarLayout">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/mondayLabel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/donation_calendar_monday_label"
-            android:textColor="@color/colorBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/colorBlack" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tuesdayLabel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/distance_between_days"
+            android:layout_weight="1"
             android:text="@string/donation_calendar_tuesday_label"
-            android:textColor="@color/colorBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/mondayLabel"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/colorBlack" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/wednesdayLabel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/distance_between_days"
+            android:layout_weight="1"
             android:text="@string/donation_calendar_wednesday_label"
-            android:textColor="@color/colorBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tuesdayLabel"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/colorBlack" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/thursdayLabel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/distance_between_days"
+            android:layout_weight="1"
             android:text="@string/donation_calendar_thursday_label"
-            android:textColor="@color/colorBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/wednesdayLabel"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/colorBlack" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fridayLabel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/distance_between_days"
+            android:layout_weight="1"
             android:text="@string/donation_calendar_friday_label"
-            android:textColor="@color/colorBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/thursdayLabel"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/colorBlack" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/saturdayLabel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/distance_between_days"
+            android:layout_weight="1"
             android:text="@string/donation_calendar_saturday_label"
-            android:textColor="@color/colorBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/fridayLabel"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/colorBlack" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sundayLabel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/distance_between_days"
+            android:layout_weight="1"
             android:text="@string/donation_calendar_sunday_label"
-            android:textColor="@color/colorBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/saturdayLabel"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textColor="@color/colorBlack" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/daysGrid"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="7"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@id/weekDaysBarLayout"
-        app:layout_constraintStart_toStartOf="@id/weekDaysBarLayout"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/weekDaysBarLayout"
         tools:listitem="@layout/donation_calendar_day_layout" />
 

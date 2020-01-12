@@ -12,17 +12,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ppspt.ba.fratresapp.R
 import java.util.*
 
-class DonationCalendarAdapter(
+class CalendarDayAdapter(
     private val context: Context,
     items: ArrayList<Date>,
     donationDays: ArrayList<Date>,
     private val clickListener: (position: Int) -> Unit
 ) :
-    RecyclerView.Adapter<DonationCalendarAdapter.CalendarDay>() {
+    RecyclerView.Adapter<CalendarDayAdapter.CalendarDay>() {
 
     private val layoutID = R.layout.donation_calendar_day_layout
     private val dayList = arrayListOf<Date>()
     private val donationDaysList = arrayListOf<Date>()
+    private var currentMonth: Int? = null
+    private var currentYear: Int? = null
 
     init {
         dayList.addAll(items)
@@ -53,9 +55,19 @@ class DonationCalendarAdapter(
 
                 dDay == day && dMonth == month
             })
-            holder.bind(elemToBind, true)
+            holder.bind(elemToBind, currentMonth, currentYear, true)
         else
-            holder.bind(elemToBind, false)
+            holder.bind(elemToBind, currentMonth, currentYear, false)
+    }
+
+    fun setDaysMonth(list: ArrayList<Date>, newMonth: Int, newYear: Int) {
+        dayList.clear()
+        dayList.addAll(list)
+
+        currentMonth = newMonth
+        currentYear = newYear
+
+        notifyDataSetChanged()
     }
 
     class CalendarDay(itemView: View, private val clickListener: (position: Int) -> Unit) :
@@ -72,12 +84,18 @@ class DonationCalendarAdapter(
         private val month = calendar.get(Calendar.MONTH)
         private val year = calendar.get(Calendar.YEAR)
 
-        fun bind(day: Date, isDonationDay: Boolean) {
+        fun bind(day: Date, currentMonth: Int?, currentYear: Int?, isDonationDay: Boolean) {
             calendar.time = day
 
-            if (year != calendar.get(Calendar.YEAR) || month != calendar.get(Calendar.MONTH)) {
+            if (currentYear ?: year != calendar.get(Calendar.YEAR) || currentMonth ?: month != calendar.get(
+                    Calendar.MONTH
+                )
+            ) {
                 dayTextView.setTextColor(Color.GRAY)
-            } else if (today == calendar.get(Calendar.DAY_OF_MONTH)) {
+            } else if (today == calendar.get(Calendar.DAY_OF_MONTH) && month == calendar.get(
+                    Calendar.MONTH
+                )
+            ) {
                 dayTextView.setTextColor(Color.WHITE)
                 dayTextLayout.setBackgroundResource(R.drawable.calendar_today_background)
             }
