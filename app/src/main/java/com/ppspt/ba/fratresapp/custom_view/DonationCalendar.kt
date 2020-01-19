@@ -35,7 +35,7 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
         initCalendar()
     }
 
-    private fun initLayout(context: Context){
+    private fun initLayout(context: Context) {
         val layout = LayoutInflater.from(context).inflate(R.layout.donation_calendar_layout, this)
 
         monthTextView = layout.findViewById(R.id.monthTextView)
@@ -44,7 +44,7 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
             var currentMonth = calendarToShow.get(Calendar.MONTH) - 1
             var currentYear = calendarToShow.get(Calendar.YEAR)
 
-            if (currentMonth == 0){
+            if (currentMonth == 0) {
                 currentMonth = 11
                 currentYear--
                 calendarToShow.set(Calendar.YEAR, currentYear)
@@ -63,7 +63,7 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
             var currentMonth = calendarToShow.get(Calendar.MONTH) - 1
             var currentYear = calendarToShow.get(Calendar.YEAR)
 
-            if (currentMonth == 11){
+            if (currentMonth == 11) {
                 currentMonth = 0
                 currentYear++
                 calendarToShow.set(Calendar.YEAR, currentYear)
@@ -80,10 +80,11 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
         daysGrid = layout.findViewById(R.id.daysGrid)
     }
 
-    private fun initCalendar(){
+    private fun initCalendar() {
         calendarToShow.set(Calendar.DAY_OF_MONTH, 1)
 
-        val month = calendarToShow.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+        val month =
+            calendarToShow.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
         monthTextView.text = month.toUpperCase(Locale.getDefault())
 
         val previousWeekMondayOffset: Int = if (calendarToShow.get(Calendar.DAY_OF_WEEK) == 1)
@@ -95,11 +96,31 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
 
         calendarToShow.add(Calendar.DAY_OF_MONTH, previousWeekMondayOffset)
 
+        /*calendarToShow.set(Calendar.DAY_OF_MONTH, lastMonthDay)
+
+        val lastWeekSundayOffset: Int = if (calendarToShow.get(Calendar.DAY_OF_WEEK) != 1) {
+            calendarToShow.get(Calendar.DAY_OF_WEEK) - Calendar.SUNDAY
+        } else
+            0
+
+        calendarToShow.set(Calendar.DAY_OF_MONTH, 1)
+        calendarToShow.add(Calendar.DAY_OF_MONTH, previousWeekMondayOffset)*/
+
         daysList.clear()
 
         for (i in 0 until -previousWeekMondayOffset + lastMonthDay) {
             daysList.add(calendarToShow.time)
             calendarToShow.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        if (calendarToShow.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+            val currentDay = calendarToShow.get(Calendar.DAY_OF_WEEK)
+            for (i in currentDay..8) {
+                daysList.add(calendarToShow.time)
+                calendarToShow.add(Calendar.DAY_OF_MONTH, 1)
+            }
+        } else {
+            daysList.add(calendarToShow.time)
         }
     }
 
@@ -113,6 +134,7 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
 
         val layoutManager = GridLayoutManager(context, 7, GridLayoutManager.VERTICAL, false)
         daysGrid.layoutManager = layoutManager
+        //daysGrid.addItemDecoration(GridItemDecorator(context, GridItemDecorator.ALL))
 
         daysGrid.adapter = daysAdapter
     }
