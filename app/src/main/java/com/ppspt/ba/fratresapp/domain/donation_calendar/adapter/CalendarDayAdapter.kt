@@ -10,19 +10,20 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.ppspt.ba.fratresapp.R
+import com.ppspt.ba.fratresapp.model.DonationDay
 import java.util.*
 
 class CalendarDayAdapter(
     private val context: Context,
     items: ArrayList<Date>,
-    donationDays: ArrayList<Date>,
+    donationDays: ArrayList<DonationDay>,
     private val clickListener: (position: Int) -> Unit
 ) :
     RecyclerView.Adapter<CalendarDayAdapter.CalendarDay>() {
 
     private val layoutID = R.layout.donation_calendar_day_layout
     private val dayList = arrayListOf<Date>()
-    private val donationDaysList = arrayListOf<Date>()
+    private val donationDaysList = arrayListOf<DonationDay>()
     private var currentMonth: Int? = null
     private var currentYear: Int? = null
 
@@ -49,7 +50,9 @@ class CalendarDayAdapter(
         val month = calendar.get(Calendar.MONTH)
 
         if (donationDaysList.any {
-                calendar.time = it
+                val tempCalendar = Calendar.getInstance()
+                tempCalendar.set(it.year, it.month, it.day)
+                calendar.time = tempCalendar.time
                 val dDay = calendar.get(Calendar.DAY_OF_MONTH)
                 val dMonth = calendar.get(Calendar.MONTH)
 
@@ -85,6 +88,8 @@ class CalendarDayAdapter(
         private val year = calendar.get(Calendar.YEAR)
 
         fun bind(day: Date, currentMonth: Int?, currentYear: Int?, isDonationDay: Boolean) {
+            var donationDayInCurrentMonth = true
+
             calendar.time = day
 
             if (currentYear ?: year != calendar.get(Calendar.YEAR) || currentMonth ?: month != calendar.get(
@@ -92,6 +97,7 @@ class CalendarDayAdapter(
                 )
             ) {
                 dayTextView.setTextColor(Color.GRAY)
+                donationDayInCurrentMonth = false
             } else if (today == calendar.get(Calendar.DAY_OF_MONTH) && month == calendar.get(
                     Calendar.MONTH
                 )
@@ -101,12 +107,15 @@ class CalendarDayAdapter(
             }
 
             // Check if is a donation day
-            // TODO: has to check with date from BE
-            if (isDonationDay) {
-                dayImageView.visibility = View.VISIBLE
+            if (donationDayInCurrentMonth) {
+                if (isDonationDay) {
+                    dayImageView.visibility = View.VISIBLE
 
-                dayMainLayout.setOnClickListener {
-                    clickListener.invoke(adapterPosition)
+                    dayMainLayout.setOnClickListener {
+                        clickListener.invoke(adapterPosition)
+                    }
+                } else {
+                    dayImageView.visibility = View.INVISIBLE
                 }
             } else {
                 dayImageView.visibility = View.INVISIBLE

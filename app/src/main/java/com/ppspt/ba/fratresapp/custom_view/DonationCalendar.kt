@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ppspt.ba.fratresapp.R
 import com.ppspt.ba.fratresapp.domain.donation_calendar.adapter.CalendarDayAdapter
+import com.ppspt.ba.fratresapp.model.DonationDay
 import java.util.*
 
 class DonationCalendar(context: Context, attributeSet: AttributeSet) :
@@ -26,7 +27,7 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
         Calendar.getInstance(TimeZone.getDefault(), Locale.ITALIAN)
 
     private val daysList = arrayListOf<Date>()
-    private var donationDaysList = arrayListOf<Date>()
+    private var donationDaysList = arrayListOf<DonationDay>()
 
     init {
 
@@ -96,16 +97,6 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
 
         calendarToShow.add(Calendar.DAY_OF_MONTH, previousWeekMondayOffset)
 
-        /*calendarToShow.set(Calendar.DAY_OF_MONTH, lastMonthDay)
-
-        val lastWeekSundayOffset: Int = if (calendarToShow.get(Calendar.DAY_OF_WEEK) != 1) {
-            calendarToShow.get(Calendar.DAY_OF_WEEK) - Calendar.SUNDAY
-        } else
-            0
-
-        calendarToShow.set(Calendar.DAY_OF_MONTH, 1)
-        calendarToShow.add(Calendar.DAY_OF_MONTH, previousWeekMondayOffset)*/
-
         daysList.clear()
 
         for (i in 0 until -previousWeekMondayOffset + lastMonthDay) {
@@ -124,7 +115,7 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
         }
     }
 
-    fun initDonationDays(list: ArrayList<Date>) {
+    fun initDonationDays(list: ArrayList<DonationDay>) {
         donationDaysList.clear()
         donationDaysList.addAll(list)
 

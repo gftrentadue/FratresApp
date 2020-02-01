@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.ppspt.ba.fratresapp.R
+import com.ppspt.ba.fratresapp.model.DonationDay
 import com.ppspt.ba.fratresapp.viewmodel.CalendarViewModel
+import com.ppspt.ba.fratresapp.viewmodel.CalendarViewModelFactory
 import kotlinx.android.synthetic.main.calendar_fragment.*
-import java.util.*
 
 class CalendarFragment : Fragment() {
     private val TAG = this::class.java.simpleName
@@ -27,25 +29,17 @@ class CalendarFragment : Fragment() {
         return inflater.inflate(R.layout.calendar_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(CalendarViewModel::class.java)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val donationDays = arrayListOf<Date>()
+        viewModel = ViewModelProvider(
+            this.requireActivity(),
+            CalendarViewModelFactory(requireActivity().application)
+        ).get(CalendarViewModel::class.java)
 
-        for (x in 5 until 31 step 14) {
-            val date = Calendar.getInstance(TimeZone.getDefault(), Locale.ITALIAN)
-
-            date[Calendar.DAY_OF_MONTH] = x
-
-            donationDays.add(date.time)
+        viewModel.getDonationDaysList().observe(this) {
+            calendarView.initDonationDays(it as ArrayList<DonationDay>)
         }
-
-        calendarView.initDonationDays(donationDays)
     }
 
 }
