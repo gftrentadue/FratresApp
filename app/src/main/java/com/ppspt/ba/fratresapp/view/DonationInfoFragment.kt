@@ -1,11 +1,11 @@
 package com.ppspt.ba.fratresapp.view
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.ppspt.ba.fratresapp.R
 import com.ppspt.ba.fratresapp.viewmodel.DonationInfoViewModel
@@ -36,8 +36,8 @@ class DonationInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val date = args.donationDate
-        dateTextView.text = date
+        val date = args.donationID
+        dateTextView.text = date.toString()
     }
 
 }

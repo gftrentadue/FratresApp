@@ -11,9 +11,10 @@
         android:label="fragment_donation_info"
         tools:layout="@layout/donation_info_fragment" >
 
-        <argument android:name="donationDate"
-            app:nullable="false"
-            android:defaultValue="EMPTY"/>
+        <argument
+            android:name="donationID"
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
 
     <fragment
@@ -25,9 +26,10 @@
             app:destination="@id/donationInfoFragment"
             app:enterAnim="@anim/nav_default_enter_anim" >
 
-            <argument android:name="donationDate"
-                app:nullable="false"
-                android:defaultValue="EMPTY"/>
+            <argument
+                android:name="donationID"
+                android:defaultValue="-1"
+                app:argType="integer" />
         </action>
 
     </fragment>

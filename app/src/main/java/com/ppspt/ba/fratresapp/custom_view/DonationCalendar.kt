@@ -29,6 +29,8 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
     private val daysList = arrayListOf<Date>()
     private var donationDaysList = arrayListOf<DonationDay>()
 
+    private lateinit var dayClickListener: (id: Int) -> Unit
+
     init {
 
         initLayout(context)
@@ -115,12 +117,17 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
         }
     }
 
+    fun setDayClickListener(clickListener: (pos: Int) -> Unit) {
+        dayClickListener = clickListener
+    }
+
     fun initDonationDays(list: ArrayList<DonationDay>) {
         donationDaysList.clear()
         donationDaysList.addAll(list)
 
         daysAdapter = CalendarDayAdapter(context, daysList, donationDaysList) {
             Log.d("DAY", "Tap on ${daysList[it]}")
+            dayClickListener.invoke(it)
         }
 
         val layoutManager = GridLayoutManager(context, 7, GridLayoutManager.VERTICAL, false)

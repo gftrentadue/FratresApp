@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import com.ppspt.ba.fratresapp.R
 import com.ppspt.ba.fratresapp.model.DonationDay
 import com.ppspt.ba.fratresapp.viewmodel.CalendarViewModel
@@ -39,6 +40,10 @@ class CalendarFragment : Fragment() {
 
         viewModel.getDonationDaysList().observe(this) {
             calendarView.initDonationDays(it as ArrayList<DonationDay>)
+        }
+
+        calendarView.setDayClickListener { id ->
+            findNavController().navigate(CalendarFragmentDirections.actionCalendarToDonationInfo(id))
         }
     }
 
