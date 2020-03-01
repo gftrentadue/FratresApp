@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.ppspt.ba.fratresapp.R
 import com.ppspt.ba.fratresapp.model.DonationDay
+import com.ppspt.ba.fratresapp.utility.InjectorUtils
 import com.ppspt.ba.fratresapp.viewmodel.CalendarViewModel
-import com.ppspt.ba.fratresapp.viewmodel.CalendarViewModelFactory
 import kotlinx.android.synthetic.main.calendar_fragment.*
 
 class CalendarFragment : Fragment() {
@@ -21,7 +21,9 @@ class CalendarFragment : Fragment() {
         fun newInstance() = CalendarFragment()
     }
 
-    private lateinit var viewModel: CalendarViewModel
+    private val viewModel: CalendarViewModel by viewModels {
+        InjectorUtils.provideCalendarViewModelFactory(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,11 +34,6 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(
-            this.requireActivity(),
-            CalendarViewModelFactory(requireActivity().application)
-        ).get(CalendarViewModel::class.java)
 
         viewModel.getDonationDaysList().observe(this) {
             calendarView.initDonationDays(it as ArrayList<DonationDay>)

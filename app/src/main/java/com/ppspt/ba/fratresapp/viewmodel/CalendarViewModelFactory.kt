@@ -1,17 +1,13 @@
 package com.ppspt.ba.fratresapp.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.ppspt.ba.fratresapp.repositories.DonationDayRepository
 
-class CalendarViewModelFactory(application: Application) : ViewModelProvider.Factory {
-    private val currentApplication: Application
-
-    init {
-        currentApplication = application
-    }
+class CalendarViewModelFactory(private val repository: DonationDayRepository) :
+    ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return CalendarViewModel(currentApplication) as T
+        return CalendarViewModel(repository) as T
     }
 }
