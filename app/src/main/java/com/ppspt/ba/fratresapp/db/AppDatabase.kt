@@ -59,7 +59,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     5,
-                    0,
+                    1,
                     2020,
                     "Parrocchia Sant'Agostino, Via Monte Pertica, Modugno, BA",
                     8,
@@ -77,7 +77,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     18,
-                    0,
+                    1,
                     2020,
                     "Via X Marzo, 92, Modugno, BA",
                     8,
@@ -95,7 +95,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     21,
-                    1,
+                    2,
                     2020,
                     "IISS Tommaso Fiore, Via Padre Annibale Maria di Francia, Modugno, BA",
                     8,
@@ -112,7 +112,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     15,
-                    2,
+                    3,
                     2020,
                     "Parrocchia Immacolata Modugno, Viale della Repubblica, Modugno, BA",
                     8,
@@ -129,7 +129,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     4,
-                    3,
+                    4,
                     2020,
                     "Via X Marzo, 92, Modugno, BA",
                     8,
@@ -146,7 +146,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     17,
-                    4,
+                    5,
                     2020,
                     "Via X Marzo, 92, Modugno, BA",
                     8,
@@ -163,7 +163,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     30,
-                    4,
+                    5,
                     2020,
                     "Via Magna Grecia, 19, 70026 Modugno BA",
                     8,
@@ -180,7 +180,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     13,
-                    5,
+                    6,
                     2020,
                     "Via X Marzo, 92, Modugno, BA",
                     8,
@@ -197,7 +197,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     4,
-                    8,
+                    9,
                     2020,
                     "Via X Marzo, 92, Modugno, BA",
                     8,
@@ -214,7 +214,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     26,
-                    8,
+                    9,
                     2020,
                     "Via X Marzo, 92, Modugno, BA",
                     8,
@@ -231,7 +231,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     16,
-                    9,
+                    10,
                     2020,
                     "Via X Marzo, 92, Modugno, BA",
                     8,
@@ -248,7 +248,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     7,
-                    10,
+                    11,
                     2020,
                     "Via Magna Grecia, 19, 70026 Modugno BA",
                     8,
@@ -265,7 +265,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     29,
-                    10,
+                    11,
                     2020,
                     "Via X Marzo, 92, Modugno, BA",
                     8,
@@ -282,7 +282,7 @@ abstract class AppDatabase : RoomDatabase() {
                 DonationDay(
                     id,
                     12,
-                    11,
+                    12,
                     2020,
                     "Parrocchia Immacolata Modugno, Viale della Repubblica, Modugno, BA",
                     8,

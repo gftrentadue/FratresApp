@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ppspt.ba.fratresapp.R
 import com.ppspt.ba.fratresapp.domain.donation_calendar.adapter.CalendarDayAdapter
+import com.ppspt.ba.fratresapp.model.Day
 import com.ppspt.ba.fratresapp.model.DonationDay
+import com.ppspt.ba.fratresapp.utility.Comparator
 import java.util.*
 
 class DonationCalendar(context: Context, attributeSet: AttributeSet) :
@@ -26,7 +28,7 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
     private val calendarToShow: Calendar =
         Calendar.getInstance(TimeZone.getDefault(), Locale.ITALIAN)
 
-    private val daysList = arrayListOf<Date>()
+    private val daysList = arrayListOf<Day>()
     private var donationDaysList = arrayListOf<DonationDay>()
 
     private lateinit var dayClickListener: (id: Int) -> Unit
@@ -58,6 +60,7 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
             calendarToShow.set(Calendar.MONTH, currentMonth)
 
             initCalendar()
+            retrieveDonationDaysInMonth()
             daysAdapter.setDaysMonth(daysList, currentMonth, currentYear)
         }
 
@@ -77,6 +80,7 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
             calendarToShow.set(Calendar.MONTH, currentMonth)
 
             initCalendar()
+            retrieveDonationDaysInMonth()
             daysAdapter.setDaysMonth(daysList, currentMonth, currentYear)
         }
 
@@ -102,18 +106,18 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
         daysList.clear()
 
         for (i in 0 until -previousWeekMondayOffset + lastMonthDay) {
-            daysList.add(calendarToShow.time)
+            daysList.add(Day(null, calendarToShow.time))
             calendarToShow.add(Calendar.DAY_OF_MONTH, 1)
         }
 
         if (calendarToShow.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
             val currentDay = calendarToShow.get(Calendar.DAY_OF_WEEK)
             for (i in currentDay..8) {
-                daysList.add(calendarToShow.time)
+                daysList.add(Day(null, calendarToShow.time))
                 calendarToShow.add(Calendar.DAY_OF_MONTH, 1)
             }
         } else {
-            daysList.add(calendarToShow.time)
+            daysList.add(Day(null, calendarToShow.time))
         }
     }
 
@@ -122,12 +126,13 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
     }
 
     fun initDonationDays(list: ArrayList<DonationDay>) {
-        donationDaysList.clear()
-        donationDaysList.addAll(list)
+        donationDaysList = list
 
-        daysAdapter = CalendarDayAdapter(context, daysList, donationDaysList) {
-            Log.d("DAY", "Tap on ${daysList[it]}")
-            dayClickListener.invoke(it)
+        retrieveDonationDaysInMonth()
+
+        daysAdapter = CalendarDayAdapter(context, daysList) { id ->
+            Log.d("DAY", "Tap on donation day with id: $id")
+            dayClickListener.invoke(id)
         }
 
         val layoutManager = GridLayoutManager(context, 7, GridLayoutManager.VERTICAL, false)
@@ -135,5 +140,27 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
         //daysGrid.addItemDecoration(GridItemDecorator(context, GridItemDecorator.ALL))
 
         daysGrid.adapter = daysAdapter
+    }
+
+    private fun retrieveDonationDaysInMonth() {
+        val currentMonth = calendarToShow.get(Calendar.MONTH)
+        val donationInMonth = donationDaysList.filter { donationDay ->
+            donationDay.month == currentMonth
+        }
+        for (day in daysList) {
+            val findValue = donationInMonth.find { donationDay ->
+                Comparator.dayComparator(
+                    day.date,
+                    donationDay.day,
+                    donationDay.month,
+                    donationDay.year
+                ) == 0
+            }
+
+            findValue?.let {
+                day.donationID = it.ID
+            }
+
+        }
     }
 }

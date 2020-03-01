@@ -10,26 +10,23 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.ppspt.ba.fratresapp.R
-import com.ppspt.ba.fratresapp.model.DonationDay
+import com.ppspt.ba.fratresapp.model.Day
 import java.util.*
 
 class CalendarDayAdapter(
     private val context: Context,
-    items: ArrayList<Date>,
-    donationDays: ArrayList<DonationDay>,
+    items: ArrayList<Day>,
     private val clickListener: (position: Int) -> Unit
 ) :
     RecyclerView.Adapter<CalendarDayAdapter.CalendarDay>() {
 
     private val layoutID = R.layout.donation_calendar_day_layout
-    private val dayList = arrayListOf<Date>()
-    private val donationDaysList = arrayListOf<DonationDay>()
+    private val dayList = arrayListOf<Day>()
     private var currentMonth: Int? = null
     private var currentYear: Int? = null
 
     init {
         dayList.addAll(items)
-        donationDaysList.addAll(donationDays)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarDay {
@@ -43,27 +40,10 @@ class CalendarDayAdapter(
     override fun onBindViewHolder(holder: CalendarDay, position: Int) {
         val elemToBind = dayList[position]
 
-        val calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault())
-        calendar.time = elemToBind
-
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val month = calendar.get(Calendar.MONTH)
-
-        if (donationDaysList.any {
-                val tempCalendar = Calendar.getInstance()
-                tempCalendar.set(it.year, it.month, it.day)
-                calendar.time = tempCalendar.time
-                val dDay = calendar.get(Calendar.DAY_OF_MONTH)
-                val dMonth = calendar.get(Calendar.MONTH)
-
-                dDay == day && dMonth == month
-            })
-            holder.bind(elemToBind, currentMonth, currentYear, true)
-        else
-            holder.bind(elemToBind, currentMonth, currentYear, false)
+        holder.bind(elemToBind, currentMonth, currentYear)
     }
 
-    fun setDaysMonth(list: ArrayList<Date>, newMonth: Int, newYear: Int) {
+    fun setDaysMonth(list: ArrayList<Day>, newMonth: Int, newYear: Int) {
         dayList.clear()
         dayList.addAll(list)
 
@@ -87,10 +67,10 @@ class CalendarDayAdapter(
         private val month = calendar.get(Calendar.MONTH)
         private val year = calendar.get(Calendar.YEAR)
 
-        fun bind(day: Date, currentMonth: Int?, currentYear: Int?, isDonationDay: Boolean) {
+        fun bind(day: Day, currentMonth: Int?, currentYear: Int?) {
             var donationDayInCurrentMonth = true
 
-            calendar.time = day
+            calendar.time = day.date
 
             if (currentYear ?: year != calendar.get(Calendar.YEAR) || currentMonth ?: month != calendar.get(
                     Calendar.MONTH
@@ -108,11 +88,11 @@ class CalendarDayAdapter(
 
             // Check if is a donation day
             if (donationDayInCurrentMonth) {
-                if (isDonationDay) {
+                if (day.donationID != null) {
                     dayImageView.visibility = View.VISIBLE
 
                     dayMainLayout.setOnClickListener {
-                        clickListener.invoke(adapterPosition)
+                        clickListener.invoke(day.donationID!!)
                     }
                 } else {
                     dayImageView.visibility = View.INVISIBLE
