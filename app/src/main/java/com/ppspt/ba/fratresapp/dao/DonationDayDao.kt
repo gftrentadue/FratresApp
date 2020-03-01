@@ -15,6 +15,9 @@ interface DonationDayDao {
     @Query("SELECT * FROM donationday WHERE day LIKE :day AND month LIKE :month")
     fun findByDay(day: Int, month: Int): LiveData<DonationDay>
 
+    @Query("SELECT * FROM donationday WHERE ID == :id")
+    fun findByID(id: Int): LiveData<DonationDay>
+
     @Insert
     fun insertAll(day: List<DonationDay>)
 

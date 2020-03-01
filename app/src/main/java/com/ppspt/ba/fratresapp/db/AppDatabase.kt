@@ -42,16 +42,6 @@ abstract class AppDatabase : RoomDatabase() {
             val request = OneTimeWorkRequestBuilder<RetrieveDaysWorker>().build()
 
             WorkManager.getInstance(context).enqueue(request)
-            /*INSTANCE?.let { dao ->
-                scope.launch(Dispatchers.IO) {
-                    val donationDayDao = dao.donationDayDao()
-
-                    donationDayDao.deleteAll()
-
-                    fillDatabase(dao.donationDayDao())
-
-                }
-            }*/
         }
 
     }
