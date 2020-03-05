@@ -3,6 +3,7 @@ package com.ppspt.ba.fratresapp.utility
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
+import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import java.io.IOException
 
@@ -22,7 +23,7 @@ object Utility {
 
             return LatLng(location.latitude, location.longitude)
         } catch (ioe: IOException){
-
+            Log.d("UTILITY-GETLOC", ioe.localizedMessage + "\nStacktrace: ${ioe.stackTrace}")
         }
 
         return null

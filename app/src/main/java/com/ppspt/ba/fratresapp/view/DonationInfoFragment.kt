@@ -66,9 +66,9 @@ class DonationInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val date = args.donationID
-        if (date != -1) {
-            viewModel.getDonationFromID(date).observe(viewLifecycleOwner) { dday ->
+        val id = args.donationID
+        if (id != -1) {
+            viewModel.getDonationFromID(id).observe(viewLifecycleOwner) { dday ->
                 donationDateTextView.text = dday.address
 
                 val donationLocation =
