@@ -28,4 +28,15 @@ object Utility {
 
         return null
     }
+
+    /**
+     * Add zero char as prefix to [number] and return a formatted string
+     */
+    fun zeroFormatter(number: Int): String {
+        return if (number < 10) {
+            "0$number"
+        } else {
+            "$number"
+        }
+    }
 }

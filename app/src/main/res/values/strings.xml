@@ -8,4 +8,10 @@
     <string name="donation_calendar_saturday_label">Sa</string>
     <string name="donation_calendar_sunday_label">Do</string>
     <string name="donation_info_donationday_label">Donazione Sangue</string>
+    <string name="donation_info_address_label">Donazione presso:</string>
+    <string name="donation_info_day_label">Il giorno</string>
+    <string name="donation_info_hour_label">Inizia alle ore</string>
+    <string name="donation_info_day_pattern">%1$s/%2$s</string>
+    <string name="donation_info_hour_pattern">%1$s:%2$s</string>
+    <string name="donation_info_book_donation_text">Prenota la donazione</string>
 </resources>

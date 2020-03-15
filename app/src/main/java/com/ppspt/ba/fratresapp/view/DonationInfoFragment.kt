@@ -1,6 +1,7 @@
 package com.ppspt.ba.fratresapp.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,10 @@ class DonationInfoFragment : Fragment() {
     private lateinit var mapView: MapView
 
     private lateinit var googleMap: GoogleMap
+
+    private var donationInterval: Int? = null
+    private var donationStartHour: Int? = null
+    private var donationFinishHour: Int? = null
 
     companion object {
         fun newInstance() = DonationInfoFragment()
@@ -69,19 +74,48 @@ class DonationInfoFragment : Fragment() {
         val id = args.donationID
         if (id != -1) {
             viewModel.getDonationFromID(id).observe(viewLifecycleOwner) { dday ->
-                donationDateTextView.text = dday.address
+                // Set values for book donation
+                donationInterval = dday.interval
+                donationStartHour = dday.stHour
+                donationFinishHour = dday.ftHour
 
-                val donationLocation =
-                    Utility.getLocationFromAddress(requireContext(), dday.address)
+                // Set marker on map
+                setMarkerOnMap(dday.address)
 
-                if (::googleMap.isInitialized && donationLocation != null) {
-                    val marker = MarkerOptions().position(donationLocation).title(requireContext().getString(R.string.donation_info_donationday_label))
-                    val cameraUpdate = CameraUpdateFactory.newLatLngZoom(donationLocation, 17f)
+                // Set other info
+                donationInfoAddressValue.text = dday.address
 
-                    googleMap.addMarker(marker)
-                    googleMap.moveCamera(cameraUpdate)
+                donationInfoDayValue.text = getString(
+                    R.string.donation_info_day_pattern,
+                    Utility.zeroFormatter(dday.day),
+                    Utility.zeroFormatter(dday.month)
+                )
+                donationInfoHourValue.text = getString(
+                    R.string.donation_info_hour_pattern,
+                    Utility.zeroFormatter(dday.stHour),
+                    Utility.zeroFormatter(dday.stMinute)
+                )
+            }
+
+            donationInfoBookButton.setOnClickListener {
+                if (donationInterval != null && donationStartHour != null && donationFinishHour != null) {
+                    Log.d(TAG, "Click on button to book donation")
                 }
             }
+        }
+    }
+
+    private fun setMarkerOnMap(address: String) {
+        val donationLocation =
+            Utility.getLocationFromAddress(requireContext(), address)
+
+        if (::googleMap.isInitialized && donationLocation != null) {
+            val marker = MarkerOptions().position(donationLocation)
+                .title(requireContext().getString(R.string.donation_info_donationday_label))
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(donationLocation, 17f)
+
+            googleMap.addMarker(marker)
+            googleMap.moveCamera(cameraUpdate)
         }
     }
 

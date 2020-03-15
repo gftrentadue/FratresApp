@@ -7,4 +7,5 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorHeartRed">#AF0000</color>
+    <color name="colorDivider">#B2B2B2</color>
 </resources>
