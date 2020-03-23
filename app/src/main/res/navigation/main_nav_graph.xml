@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/donationInfoFragment"
-        android:name="com.ppspt.ba.fratresapp.view.DonationInfoFragment"
+        android:name="com.ppspt.ba.fratresapp.view.donation_info.DonationInfoFragment"
         android:label="fragment_donation_info"
         tools:layout="@layout/donation_info_fragment" >
 

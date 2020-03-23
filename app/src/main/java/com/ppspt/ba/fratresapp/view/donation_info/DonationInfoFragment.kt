@@ -1,4 +1,4 @@
-package com.ppspt.ba.fratresapp.view
+package com.ppspt.ba.fratresapp.view.donation_info
 
 import android.os.Bundle
 import android.util.Log
@@ -34,7 +34,8 @@ class DonationInfoFragment : Fragment() {
     private var donationFinishHour: Int? = null
 
     companion object {
-        fun newInstance() = DonationInfoFragment()
+        fun newInstance() =
+            DonationInfoFragment()
     }
 
     private val viewModel: DonationInfoViewModel by viewModels {
@@ -100,6 +101,15 @@ class DonationInfoFragment : Fragment() {
             donationInfoBookButton.setOnClickListener {
                 if (donationInterval != null && donationStartHour != null && donationFinishHour != null) {
                     Log.d(TAG, "Click on button to book donation")
+                    val dialog = DonationBookDialog()
+                    dialog.setCloseDialogListener( object : IDonationBookChooseListener{
+                        override fun onDonationIntervalSelected(interval: String) {
+                            Log.d(TAG, "Chip selected: $interval")
+                        }
+
+                    })
+
+                    dialog.show(parentFragmentManager, "book_intervals_dialog")
                 }
             }
         }

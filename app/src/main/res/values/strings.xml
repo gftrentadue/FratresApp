@@ -14,4 +14,5 @@
     <string name="donation_info_day_pattern">%1$s/%2$s</string>
     <string name="donation_info_hour_pattern">%1$s:%2$s</string>
     <string name="donation_info_book_donation_text">Prenota la donazione</string>
+    <string name="donation_book_label">Seleziona un intervallo in cui vuoi andare a fare la donazione</string>
 </resources>
