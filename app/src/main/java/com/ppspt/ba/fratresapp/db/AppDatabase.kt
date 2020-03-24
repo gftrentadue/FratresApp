@@ -9,10 +9,11 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.ppspt.ba.fratresapp.dao.DonationDayDao
 import com.ppspt.ba.fratresapp.model.DonationDay
-import com.ppspt.ba.fratresapp.model.TABLE_NAME
+import com.ppspt.ba.fratresapp.model.DONATION_TABLE_NAME
+import com.ppspt.ba.fratresapp.model.User
 import com.ppspt.ba.fratresapp.workers.RetrieveDaysWorker
 
-@Database(entities = [DonationDay::class], version = 1, exportSchema = false)
+@Database(entities = [DonationDay::class, User::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun donationDayDao(): DonationDayDao
 
@@ -25,7 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    TABLE_NAME
+                    DONATION_TABLE_NAME
                 ).addCallback(DonationDayCallback(context)).build()
 
                 INSTANCE = instance
