@@ -9,4 +9,6 @@
     <color name="colorBlack">#000000</color>
     <color name="colorHeartRed">#AF0000</color>
     <color name="colorDivider">#B2B2B2</color>
+    <color name="colorDisableButton">#747474</color>
+    <color name="colorRedDisabledStroke">#280000</color>
 </resources>
