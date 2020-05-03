@@ -15,4 +15,8 @@
     <string name="donation_info_hour_pattern">%1$s:%2$s</string>
     <string name="donation_info_book_donation_text">Prenota la donazione</string>
     <string name="donation_book_label">Seleziona un intervallo in cui vuoi andare a fare la donazione</string>
+    <string name="donation_book_title">Intervalli Donazioni</string>
+    <string name="donation_set_book_text">Seleziona intervallo</string>
+    <string name="donation_info_selected_interval_label">L\'intervallo selezionato è: %1$s</string>
+    <string name="donation_info_confirm_book_text">Conferma prenotazione</string>
 </resources>

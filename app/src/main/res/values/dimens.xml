@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="distance_between_days">32dp</dimen>
+    <dimen name="book_chip_stroke_width">2dp</dimen>
+    <dimen name="margin_64">64dp</dimen>
+    <dimen name="margin_40">40dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
 </resources>
