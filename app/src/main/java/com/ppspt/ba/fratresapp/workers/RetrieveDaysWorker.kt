@@ -36,8 +36,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -55,8 +54,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -74,8 +72,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -92,8 +89,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -110,8 +106,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -128,8 +123,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -146,8 +140,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -164,8 +157,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -182,8 +174,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -200,8 +191,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -218,8 +208,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -236,8 +225,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -254,8 +242,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
@@ -272,8 +259,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20,
-                arrayListOf()
+                20
             )
         )
 
