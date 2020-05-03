@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -32,6 +33,8 @@ class DonationInfoFragment : Fragment() {
     private var donationInterval: Int? = null
     private var donationStartHour: Int? = null
     private var donationFinishHour: Int? = null
+
+    private var selectedInterval = ""
 
     companion object {
         fun newInstance() =
@@ -101,12 +104,106 @@ class DonationInfoFragment : Fragment() {
             donationInfoBookButton.setOnClickListener {
                 if (donationInterval != null && donationStartHour != null && donationFinishHour != null) {
                     Log.d(TAG, "Click on button to book donation")
-                    val dialog = DonationBookDialog()
-                    dialog.setCloseDialogListener( object : IDonationBookChooseListener{
+                    val dialog = DonationBookDialog(selectedInterval)
+                    dialog.setCloseDialogListener(object : IDonationBookChooseListener {
                         override fun onDonationIntervalSelected(interval: String) {
-                            Log.d(TAG, "Chip selected: $interval")
-                        }
+                            // Update selected interval
+                            selectedInterval = interval
 
+                            // Update visibility and constraints based on dialog result
+                            if (interval.isNotEmpty()) {
+                                donationInfoSelectedInterval.text = requireContext().getString(
+                                    R.string.donation_info_selected_interval_label,
+                                    interval
+                                )
+
+                                // Update main visibility
+                                donationInfoSelectedInterval.visibility = View.VISIBLE
+                                // Update main constraints
+                                val constraint = ConstraintSet()
+                                constraint.clone(donationInfoMainLayout)
+                                constraint.connect(
+                                    R.id.donationInfoButtonsLayout,
+                                    ConstraintSet.TOP,
+                                    R.id.donationInfoSelectedInterval,
+                                    ConstraintSet.BOTTOM,
+                                    resources.getDimension(R.dimen.margin_40).toInt()
+                                )
+                                constraint.applyTo(donationInfoMainLayout)
+
+                                // Update button visibility
+                                donationInfoConfirmButton.visibility = View.VISIBLE
+                                //Update buttons layout constraint
+                                val buttonsConstraint = ConstraintSet()
+                                buttonsConstraint.clone(donationInfoButtonsLayout)
+                                buttonsConstraint.connect(
+                                    R.id.donationInfoBookButton,
+                                    ConstraintSet.START,
+                                    ConstraintSet.PARENT_ID,
+                                    ConstraintSet.START,
+                                    0
+                                )
+                                buttonsConstraint.connect(
+                                    R.id.donationInfoConfirmButton,
+                                    ConstraintSet.START,
+                                    R.id.donationInfoBookButton,
+                                    ConstraintSet.END,
+                                    resources.getDimension(R.dimen.margin_8).toInt()
+                                )
+                                buttonsConstraint.connect(
+                                    R.id.donationInfoConfirmButton,
+                                    ConstraintSet.END,
+                                    ConstraintSet.PARENT_ID,
+                                    ConstraintSet.END,
+                                    0
+                                )
+                                buttonsConstraint.setHorizontalBias(R.id.donationInfoBookButton, 0f)
+                                buttonsConstraint.setHorizontalBias(
+                                    R.id.donationInfoConfirmButton,
+                                    1f
+                                )
+                                buttonsConstraint.applyTo(donationInfoButtonsLayout)
+                            } else {
+                                // Update main visibility
+                                donationInfoSelectedInterval.visibility = View.GONE
+                                // Update main constraints
+                                val constraint = ConstraintSet()
+                                constraint.clone(donationInfoMainLayout)
+                                constraint.connect(
+                                    R.id.donationInfoButtonsLayout,
+                                    ConstraintSet.TOP,
+                                    R.id.donationInfoDayHourLayout,
+                                    ConstraintSet.BOTTOM,
+                                    resources.getDimension(R.dimen.margin_64).toInt()
+                                )
+                                constraint.applyTo(donationInfoMainLayout)
+
+                                // Update button visibility
+                                donationInfoConfirmButton.visibility = View.GONE
+                                //Update buttons layout constraint
+                                val buttonsConstraint = ConstraintSet()
+                                buttonsConstraint.clone(donationInfoButtonsLayout)
+                                buttonsConstraint.connect(
+                                    R.id.donationInfoBookButton,
+                                    ConstraintSet.START,
+                                    ConstraintSet.PARENT_ID,
+                                    ConstraintSet.START,
+                                    0
+                                )
+                                buttonsConstraint.connect(
+                                    R.id.donationInfoBookButton,
+                                    ConstraintSet.END,
+                                    ConstraintSet.PARENT_ID,
+                                    ConstraintSet.END,
+                                    0
+                                )
+                                buttonsConstraint.setHorizontalBias(
+                                    R.id.donationInfoBookButton,
+                                    0.5f
+                                )
+                                buttonsConstraint.applyTo(donationInfoButtonsLayout)
+                            }
+                        }
                     })
 
                     dialog.show(parentFragmentManager, "book_intervals_dialog")
