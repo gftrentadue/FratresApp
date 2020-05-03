@@ -1,19 +1,40 @@
 package com.ppspt.ba.fratresapp.view.donation_info
 
+import android.app.Dialog
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.chip.Chip
 import com.ppspt.ba.fratresapp.R
 import kotlinx.android.synthetic.main.donation_book_dialog.*
 
-class DonationBookDialog : DialogFragment() {
+
+class DonationBookDialog(private val selectedInterval: String) : DialogFragment() {
+    // TODO: passing value for selected interval can be done with shared viewmodel
     private lateinit var chipSelectedListener: IDonationBookChooseListener
     private var chipSelectedText = ""
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog: Dialog = super.onCreateDialog(savedInstanceState)
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        return dialog
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val dialog: Dialog? = dialog
+        if (dialog != null) {
+            dialog.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,6 +45,27 @@ class DonationBookDialog : DialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // Set ColorStateList for change text color on button state change
+        val buttonStates = arrayOf(
+            intArrayOf(-android.R.attr.state_enabled), intArrayOf(android.R.attr.state_enabled)
+        )
+
+        val buttonTextColors = intArrayOf(
+            ContextCompat.getColor(requireContext(), R.color.colorWhite),
+            ContextCompat.getColor(requireContext(), R.color.colorBlack)
+        )
+        donationSetBookButton.setTextColor(ColorStateList(buttonStates, buttonTextColors))
+
+        donationSetBookButton.isEnabled = false
+        donationSetBookButton.setOnClickListener {
+            chipSelectedListener.onDonationIntervalSelected(chipSelectedText)
+            dismiss()
+        }
+
+        donationBookCloseIcon.setOnClickListener {
+            dismiss()
+        }
+
         val intervals = arrayListOf(
             "08:00 - 08:20",
             "08:20 - 08:40",
@@ -39,11 +81,6 @@ class DonationBookDialog : DialogFragment() {
             "11:40 - 12:00"
         )
         setBookIntervals(intervals)
-
-        donationBookCloseIcon.setOnClickListener {
-            chipSelectedListener.onDonationIntervalSelected(chipSelectedText)
-            dismiss()
-        }
     }
 
     private fun setBookIntervals(intervals: ArrayList<String>) {
@@ -95,7 +132,7 @@ class DonationBookDialog : DialogFragment() {
                     R.color.colorAccentDark
                 )
             )
-            chip.chipStrokeWidth = 2 * requireContext().resources.displayMetrics.density
+            chip.chipStrokeWidth = resources.getDimension(R.dimen.book_chip_stroke_width)
 
             // Show the chip icon in chip
             chip.isCloseIconVisible = false
@@ -104,8 +141,23 @@ class DonationBookDialog : DialogFragment() {
 
             donationBookIntervals.addView(chip)
 
-            chip.setOnClickListener {
-                chipSelectedText = (it as Chip).text.toString()
+            chip.setOnCheckedChangeListener { chipView, isChecked ->
+                val selectedChipText = (chipView as Chip).text.toString()
+                if (isChecked) {
+                    chipSelectedText = selectedChipText
+                    donationSetBookButton.isEnabled = true
+                } else {
+                    // The same chip is deselected
+                    if (chipSelectedText == selectedChipText) {
+                        chipSelectedText = ""
+                        donationSetBookButton.isEnabled = false
+                    }
+                }
+            }
+
+            // Update checked chip based on previously selected chip
+            if (selectedInterval == interval) {
+                chip.isChecked = true
             }
         }
     }
