@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -35,12 +36,24 @@ class CalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getDonationDaysList().observe(this) {
+        viewModel.getDonationDaysList().observe(viewLifecycleOwner) {
             calendarView.initDonationDays(it as ArrayList<DonationDay>)
         }
 
         calendarView.setDayClickListener { id ->
-            findNavController().navigate(CalendarFragmentDirections.actionCalendarToDonationInfo(id))
+            if (id == -1) {
+                Toast.makeText(
+                    requireContext(),
+                    requireContext().getString(R.string.donation_calendar_no_donation_message),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                findNavController().navigate(
+                    CalendarFragmentDirections.actionCalendarToDonationInfo(
+                        id
+                    )
+                )
+            }
         }
     }
 

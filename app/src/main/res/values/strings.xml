@@ -19,4 +19,5 @@
     <string name="donation_set_book_text">Seleziona intervallo</string>
     <string name="donation_info_selected_interval_label">L\'intervallo selezionato è: %1$s</string>
     <string name="donation_info_confirm_book_text">Conferma prenotazione</string>
+    <string name="donation_calendar_no_donation_message">Nel giorno selezionato non è prevista una donazione.</string>
 </resources>

@@ -96,9 +96,15 @@ class CalendarDayAdapter(
                     }
                 } else {
                     dayImageView.visibility = View.INVISIBLE
+                    dayMainLayout.setOnClickListener {
+                        clickListener.invoke(-1)
+                    }
                 }
             } else {
                 dayImageView.visibility = View.INVISIBLE
+                dayMainLayout.setOnClickListener {
+                    clickListener.invoke(-1)
+                }
             }
 
             val dayToBind = calendar.get(Calendar.DAY_OF_MONTH)
