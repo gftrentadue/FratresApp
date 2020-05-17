@@ -9,13 +9,13 @@ import com.ppspt.ba.fratresapp.model.DonationDay
 
 @Dao
 interface DonationDayDao {
-    @Query("SELECT * FROM donationday")
+    @Query("SELECT * FROM donation_table")
     fun getAll(): LiveData<List<DonationDay>>
 
-    @Query("SELECT * FROM donationday WHERE day LIKE :day AND month LIKE :month")
+    @Query("SELECT * FROM donation_table WHERE day LIKE :day AND month LIKE :month")
     fun findByDay(day: Int, month: Int): LiveData<DonationDay>
 
-    @Query("SELECT * FROM donationday WHERE ID == :id")
+    @Query("SELECT * FROM donation_table WHERE ID == :id")
     fun findByID(id: Int): LiveData<DonationDay>
 
     @Insert
@@ -24,6 +24,6 @@ interface DonationDayDao {
     @Delete
     fun delete(day: DonationDay)
 
-    @Query("DELETE FROM donationday")
+    @Query("DELETE FROM donation_table")
     fun deleteAll()
 }
