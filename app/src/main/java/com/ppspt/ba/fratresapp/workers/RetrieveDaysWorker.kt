@@ -6,10 +6,12 @@ import androidx.work.WorkerParameters
 import com.ppspt.ba.fratresapp.dao.DonationDayDao
 import com.ppspt.ba.fratresapp.db.AppDatabase
 import com.ppspt.ba.fratresapp.model.DonationDay
+import com.ppspt.ba.fratresapp.model.DonationInterval
 import kotlinx.coroutines.coroutineScope
 
 class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
     CoroutineWorker(context, workerParameters) {
+
     override suspend fun doWork(): Result = coroutineScope {
         val database = AppDatabase.getInstance(applicationContext)
 
@@ -36,7 +38,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -54,7 +56,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -72,7 +74,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -89,7 +91,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -106,7 +108,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -123,7 +125,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -140,7 +142,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -157,7 +159,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -174,7 +176,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -191,7 +193,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -208,7 +210,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -225,7 +227,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -242,7 +244,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
@@ -259,11 +261,56 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
                 0,
                 12,
                 0,
-                20
+                createDonationIntervals(8, 0, 12, 0, 20)
             )
         )
 
         dao.insertAll(dayList)
+    }
+
+    private fun createDonationIntervals(
+        startHour: Int,
+        startMinute: Int,
+        finishHour: Int,
+        finishMinute: Int,
+        duration: Int
+    ): ArrayList<DonationInterval> {
+        val intervals = arrayListOf<DonationInterval>()
+
+        // Calculate minutes from start time to finish time
+        val donationTime = ((finishHour - (startHour + 1)) * 60) + (60 - startMinute) + finishMinute
+
+        // TODO: what's happen if donationTime % duration isn't 0?
+        val numInterval = donationTime / duration
+
+        var minute = 0
+        var hour = 0
+        var intervalStartHour = startHour
+        var intervalStartMinute = startMinute
+
+        for (i in 0 until numInterval) {
+            if (minute == 60) {
+                minute = 0
+                hour++
+            }
+
+            minute += duration
+
+            intervals.add(
+                DonationInterval(
+                    intervalStartHour,
+                    intervalStartMinute,
+                    hour,
+                    minute,
+                    arrayListOf()
+                )
+            )
+
+            intervalStartHour = hour
+            intervalStartMinute = minute
+        }
+
+        return intervals
     }
 
 }

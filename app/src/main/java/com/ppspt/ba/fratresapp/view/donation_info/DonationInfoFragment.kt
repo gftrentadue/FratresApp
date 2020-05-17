@@ -17,6 +17,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.MarkerOptions
 import com.ppspt.ba.fratresapp.R
+import com.ppspt.ba.fratresapp.model.DonationInterval
 import com.ppspt.ba.fratresapp.utility.InjectorUtils
 import com.ppspt.ba.fratresapp.utility.Utility
 import com.ppspt.ba.fratresapp.viewmodel.DonationInfoViewModel
@@ -30,7 +31,7 @@ class DonationInfoFragment : Fragment() {
 
     private lateinit var googleMap: GoogleMap
 
-    private var donationInterval: Int? = null
+    private var donationInterval: ArrayList<DonationInterval>? = null
     private var donationStartHour: Int? = null
     private var donationFinishHour: Int? = null
 
@@ -79,7 +80,7 @@ class DonationInfoFragment : Fragment() {
         if (id != -1) {
             viewModel.getDonationFromID(id).observe(viewLifecycleOwner) { dday ->
                 // Set values for book donation
-                donationInterval = dday.interval
+                donationInterval = dday.intervals
                 donationStartHour = dday.stHour
                 donationFinishHour = dday.ftHour
 
