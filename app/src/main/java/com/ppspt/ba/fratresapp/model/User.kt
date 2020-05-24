@@ -1,26 +1,34 @@
 package com.ppspt.ba.fratresapp.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 
-const val USER_TABLE_NAME: String = "UserTable"
-const val NAME_COLUMN_NAME: String = "NAME"
-const val SURNAME_COLUMN_NAME: String = "SURNAME"
-const val ROUTE_COLUMN_NAME: String = "ROUTE"
-const val CITY_COLUMN_NAME: String = "CITY"
-const val PROVINCE_COLUMN_NAME: String = "PROVINCE"
-const val DATE_BIRTH_COLUMN_NAME: String = "DATE_BIRTH"
+const val USER_TABLE_NAME = "user_table"
+const val USER_NAME_COLUMN_NAME = "NAME"
+const val USER_NAME_COLUMN_SURNAME = "SURNAME"
+const val USER_NAME_COLUMN_ROUTE = "ROUTE"
+const val USER_NAME_COLUMN_CITY = "CITY"
+const val USER_NAME_COLUMN_CAP = "CAP"
+const val USER_NAME_COLUMN_PROVINCE = "PROVINCE"
+const val USER_NAME_COLUMN_DATE = "DATEOFBIRTH"
 
-@Entity
+@Entity(tableName = USER_TABLE_NAME, primaryKeys = arrayOf("NAME", "SURNAME", "DATEOFBIRTH"))
 data class User(
-    val name: String,
-    val surname: String,
-    val route: String,
-    val city: String,
-    val cap: String,
-    val province: String,
-    val dateOfBirth: Long?
-){
-    fun getAddress(): String{
+    @ColumnInfo(name = USER_NAME_COLUMN_NAME) val name: String,
+    @ColumnInfo(name = USER_NAME_COLUMN_SURNAME) val surname: String,
+    @ColumnInfo(name = USER_NAME_COLUMN_ROUTE) val route: String,
+    @ColumnInfo(name = USER_NAME_COLUMN_CITY) val city: String,
+    @ColumnInfo(name = USER_NAME_COLUMN_CAP) val cap: String,
+    @ColumnInfo(name = USER_NAME_COLUMN_PROVINCE) val province: String,
+    @ColumnInfo(name = USER_NAME_COLUMN_DATE) val dateOfBirth: Long
+) : Comparable<User> {
+    fun getAddress(): String {
         return "$route, $cap $city $province"
     }
+
+    override fun compareTo(other: User): Int =
+        compareValuesBy(this, other,
+            { u -> u.name },
+            { u -> u.surname },
+            { u -> u.dateOfBirth })
 }
