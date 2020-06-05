@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -11,11 +12,14 @@ import com.ppspt.ba.fratresapp.dao.DonationDayDao
 import com.ppspt.ba.fratresapp.dao.UserDao
 import com.ppspt.ba.fratresapp.model.DonationDay
 import com.ppspt.ba.fratresapp.model.User
+import com.ppspt.ba.fratresapp.utility.DonationConverters
+import com.ppspt.ba.fratresapp.utility.UserConverters
 import com.ppspt.ba.fratresapp.workers.RetrieveDaysWorker
 
 const val DATABASE_NAME = "fratres_db"
 
 @Database(entities = [DonationDay::class, User::class], version = 1, exportSchema = false)
+@TypeConverters(UserConverters::class, DonationConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun donationDayDao(): DonationDayDao
     abstract fun userDao(): UserDao

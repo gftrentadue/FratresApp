@@ -5,11 +5,14 @@ import com.ppspt.ba.fratresapp.dao.DonationDayDao
 import com.ppspt.ba.fratresapp.model.DonationDay
 
 class DonationDayRepository(private val donationDayDao: DonationDayDao) {
-    val allDonationDay = donationDayDao.getAll()
-
     fun getDonationByID(id: Int): LiveData<DonationDay> {
         return donationDayDao.findByID(id)
     }
+
+    fun getAllDonationDays(): LiveData<List<DonationDay>>{
+        return donationDayDao.getAll()
+    }
+
     companion object {
 
         // For Singleton instantiation

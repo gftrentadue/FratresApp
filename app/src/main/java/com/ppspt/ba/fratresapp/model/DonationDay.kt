@@ -1,10 +1,7 @@
 package com.ppspt.ba.fratresapp.model
 
-import androidx.annotation.NonNull
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.ppspt.ba.fratresapp.utility.DonationConverters
 
 const val DONATION_TABLE_NAME: String = "donation_table"
 const val DAY_COLUMN_NAME: String = "DAY"
@@ -18,15 +15,17 @@ const val FTMINUTE_COLUMN_NAME: String = "FTMINUTE"
 const val INTERVAL_COLUMN_NAME: String = "INTERVAL"
 
 @Entity(tableName = DONATION_TABLE_NAME)
-data class DonationDay(
-    @PrimaryKey val ID: Int,
-    @ColumnInfo(name = DAY_COLUMN_NAME) val day: Int,
-    @ColumnInfo(name = MONTH_COLUMN_NAME) val month: Int,
-    @ColumnInfo(name = YEAR_COLUMN_NAME) val year: Int,
-    @ColumnInfo(name = ADDRESS_COLUMN_NAME) val address: String,
-    @ColumnInfo(name = STHOUR_COLUMN_NAME) val stHour: Int,
-    @ColumnInfo(name = STMINUTE_COLUMN_NAME) val stMinute: Int,
-    @ColumnInfo(name = FTHOUR_COLUMN_NAME) val ftHour: Int,
-    @ColumnInfo(name = FTMINUTE_COLUMN_NAME) val ftMinute: Int,
-    @Embedded @NonNull val intervals: ArrayList<DonationInterval> = arrayListOf()
-)
+class DonationDay(
+    @PrimaryKey val ID: Int = 0,
+    @ColumnInfo(name = DAY_COLUMN_NAME) val day: Int = 1,
+    @ColumnInfo(name = MONTH_COLUMN_NAME) val month: Int = 1,
+    @ColumnInfo(name = YEAR_COLUMN_NAME) val year: Int = 1,
+    @ColumnInfo(name = ADDRESS_COLUMN_NAME) val address: String = "",
+    @ColumnInfo(name = STHOUR_COLUMN_NAME) val stHour: Int = 1,
+    @ColumnInfo(name = STMINUTE_COLUMN_NAME) val stMinute: Int = 1,
+    @ColumnInfo(name = FTHOUR_COLUMN_NAME) val ftHour: Int = 1,
+    @ColumnInfo(name = FTMINUTE_COLUMN_NAME) val ftMinute: Int = 1,
+    @Embedded @TypeConverters(DonationConverters::class) val intervals: List<DonationInterval> = emptyList()
+) {
+    constructor() : this(0,1,1,1,"", 1,1,1,1, emptyList())
+}

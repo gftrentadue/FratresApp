@@ -1,10 +1,7 @@
 package com.ppspt.ba.fratresapp.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.ppspt.ba.fratresapp.model.DonationDay
 
 @Dao
@@ -18,7 +15,7 @@ interface DonationDayDao {
     @Query("SELECT * FROM donation_table WHERE ID == :id")
     fun findByID(id: Int): LiveData<DonationDay>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(day: List<DonationDay>)
 
     @Delete

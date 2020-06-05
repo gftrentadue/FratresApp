@@ -6,12 +6,10 @@ import com.ppspt.ba.fratresapp.model.DonationDay
 import com.ppspt.ba.fratresapp.repositories.DonationDayRepository
 
 class CalendarViewModel internal constructor(
-    repository: DonationDayRepository
+    private val repository: DonationDayRepository
 ) : ViewModel() {
 
-    private val dayList: LiveData<List<DonationDay>> = repository.allDonationDay
-
     fun getDonationDaysList(): LiveData<List<DonationDay>> {
-        return dayList
+        return repository.getAllDonationDays()
     }
 }
