@@ -16,16 +16,36 @@ const val INTERVAL_COLUMN_NAME: String = "INTERVAL"
 
 @Entity(tableName = DONATION_TABLE_NAME)
 class DonationDay(
-    @PrimaryKey val ID: Int = 0,
-    @ColumnInfo(name = DAY_COLUMN_NAME) val day: Int = 1,
-    @ColumnInfo(name = MONTH_COLUMN_NAME) val month: Int = 1,
-    @ColumnInfo(name = YEAR_COLUMN_NAME) val year: Int = 1,
-    @ColumnInfo(name = ADDRESS_COLUMN_NAME) val address: String = "",
-    @ColumnInfo(name = STHOUR_COLUMN_NAME) val stHour: Int = 1,
-    @ColumnInfo(name = STMINUTE_COLUMN_NAME) val stMinute: Int = 1,
-    @ColumnInfo(name = FTHOUR_COLUMN_NAME) val ftHour: Int = 1,
-    @ColumnInfo(name = FTMINUTE_COLUMN_NAME) val ftMinute: Int = 1,
-    @Embedded @TypeConverters(DonationConverters::class) val intervals: List<DonationInterval> = emptyList()
+    @PrimaryKey
+    val ID: Int = 0,
+
+    @ColumnInfo(name = DAY_COLUMN_NAME)
+    val day: Int? = 1,
+
+    @ColumnInfo(name = MONTH_COLUMN_NAME)
+    val month: Int? = 1,
+
+    @ColumnInfo(name = YEAR_COLUMN_NAME)
+    val year: Int? = 1,
+
+    @ColumnInfo(name = ADDRESS_COLUMN_NAME)
+    val address: String? = "",
+
+    @ColumnInfo(name = STHOUR_COLUMN_NAME)
+    val stHour: Int? = 1,
+
+    @ColumnInfo(name = STMINUTE_COLUMN_NAME)
+    val stMinute: Int? = 1,
+
+    @ColumnInfo(name = FTHOUR_COLUMN_NAME)
+    val ftHour: Int? = 1,
+
+    @ColumnInfo(name = FTMINUTE_COLUMN_NAME)
+    val ftMinute: Int? = 1,
+
+    @Embedded
+    @TypeConverters(DonationConverters::class)
+    val intervals: List<DonationInterval>? = emptyList()
 ) {
     constructor() : this(0,1,1,1,"", 1,1,1,1, emptyList())
 }

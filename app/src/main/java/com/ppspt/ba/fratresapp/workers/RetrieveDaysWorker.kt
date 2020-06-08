@@ -33,7 +33,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
     private suspend fun fillDatabase(dao: DonationDayDao) {
         val dayList = arrayListOf<DonationDay>()
         var id = 0
-        val donationIntervals = createDonationIntervals(8, 0, 12, 0, 20)
+        var donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
         // 05/01/2020 PARROCCHIA SANT'AGOSTINO
         dayList.add(
             DonationDay(
@@ -51,6 +51,8 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         )
 
         id++
+
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
 
         // 18/01/2020 FRATRES
         dayList.add(
@@ -70,6 +72,8 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
 
         id++
 
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+
         // 21/02/2020 ISTITUTO TOMMASO FIORE
         dayList.add(
             DonationDay(
@@ -87,6 +91,9 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         )
 
         id++
+
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+
         // 15/03/2020 PARROCCHIA IMMACOLATA
         dayList.add(
             DonationDay(
@@ -104,6 +111,9 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         )
 
         id++
+
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+
         // 04/04/2020 FRATRES
         dayList.add(
             DonationDay(
@@ -121,6 +131,9 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         )
 
         id++
+
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+
         // 17/05/2020 FRETRES
         dayList.add(
             DonationDay(
@@ -138,6 +151,9 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         )
 
         id++
+
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+
         // 30/05/2020 PARROCCHIA SANT'OTTAVIO
         dayList.add(
             DonationDay(
@@ -155,6 +171,9 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         )
 
         id++
+
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+
         // 13/06/2020 FRATRES
         dayList.add(
             DonationDay(
@@ -172,6 +191,9 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         )
 
         id++
+
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+
         // 04/09/2020 FRATRES
         dayList.add(
             DonationDay(
@@ -189,6 +211,9 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         )
 
         id++
+
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+
         // 26/09/2020 FRATRES
         dayList.add(
             DonationDay(
@@ -206,6 +231,9 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         )
 
         id++
+
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+
         // 16/10/2020 ISTITUTO TOMMASO FIORE
         dayList.add(
             DonationDay(
@@ -223,6 +251,9 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         )
 
         id++
+
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+
         // 07/11/2020 PARROCCHIA SANT'OTTAVIO
         dayList.add(
             DonationDay(
@@ -240,6 +271,9 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         )
 
         id++
+
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+
         // 29/11/2020 FRATRES
         dayList.add(
             DonationDay(
@@ -257,6 +291,9 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         )
 
         id++
+
+        donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+
         // 12/12/2020 PARROCCHIA IMMACOLATA
         dayList.add(
             DonationDay(
@@ -277,6 +314,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
     }
 
     private fun createDonationIntervals(
+        donationId: Int,
         startHour: Int,
         startMinute: Int,
         finishHour: Int,
@@ -304,8 +342,10 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
 
             minute += duration
 
+            // TODO: id values work because there are the same numInterval for all donation
             intervals.add(
                 DonationInterval(
+                    donationId + i * numInterval,
                     intervalStartHour,
                     intervalStartMinute,
                     hour,
