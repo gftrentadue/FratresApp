@@ -9,6 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.ppspt.ba.fratresapp.dao.DonationDayDao
+import com.ppspt.ba.fratresapp.dao.DonationIntervalDao
 import com.ppspt.ba.fratresapp.dao.UserDao
 import com.ppspt.ba.fratresapp.model.DonationDay
 import com.ppspt.ba.fratresapp.model.DonationInterval
@@ -24,6 +25,7 @@ const val DATABASE_NAME = "fratres_db"
 abstract class AppDatabase : RoomDatabase() {
     abstract fun donationDayDao(): DonationDayDao
     abstract fun userDao(): UserDao
+    abstract fun donationIntervalDao(): DonationIntervalDao
 
     companion object {
         @Volatile

@@ -3,6 +3,7 @@ package com.ppspt.ba.fratresapp.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.ppspt.ba.fratresapp.model.DonationDay
+import com.ppspt.ba.fratresapp.utility.DonationConverters
 
 @Dao
 interface DonationDayDao {

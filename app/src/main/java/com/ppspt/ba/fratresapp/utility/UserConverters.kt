@@ -5,15 +5,15 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ppspt.ba.fratresapp.model.User
 
-object UserConverters {
+class UserConverters {
     @TypeConverter
-    fun userListToJson(list: ArrayList<User>): String {
+    fun userListToJson(list: List<User>): String {
         return Gson().toJson(list)
     }
 
     @TypeConverter
-    fun jsonToUserList(json: String): ArrayList<User> {
-        val listType = object : TypeToken<ArrayList<User>>() {}.type
+    fun jsonToUserList(json: String): List<User> {
+        val listType = object : TypeToken<List<User>>() {}.type
         return Gson().fromJson(json, listType)
     }
 }

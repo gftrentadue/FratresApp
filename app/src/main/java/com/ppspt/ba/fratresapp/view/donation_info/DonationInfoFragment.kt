@@ -80,26 +80,28 @@ class DonationInfoFragment : Fragment() {
         if (id != -1) {
             viewModel.getDonationFromID(id).observe(viewLifecycleOwner) { dday ->
                 // Set values for book donation
-                donationInterval = dday.intervals
-                donationStartHour = dday.stHour
-                donationFinishHour = dday.ftHour
+                if (!dday.intervals.isNullOrEmpty()){
+                    donationInterval = dday.intervals as ArrayList<DonationInterval>
+                    donationStartHour = dday.stHour
+                    donationFinishHour = dday.ftHour
 
-                // Set marker on map
-                setMarkerOnMap(dday.address)
+                    // Set marker on map
+                    setMarkerOnMap(dday.address ?: "")
 
-                // Set other info
-                donationInfoAddressValue.text = dday.address
+                    // Set other info
+                    donationInfoAddressValue.text = dday.address
 
-                donationInfoDayValue.text = getString(
-                    R.string.donation_info_day_pattern,
-                    Utility.zeroFormatter(dday.day),
-                    Utility.zeroFormatter(dday.month)
-                )
-                donationInfoHourValue.text = getString(
-                    R.string.donation_info_hour_pattern,
-                    Utility.zeroFormatter(dday.stHour),
-                    Utility.zeroFormatter(dday.stMinute)
-                )
+                    donationInfoDayValue.text = getString(
+                        R.string.donation_info_day_pattern,
+                        Utility.zeroFormatter(dday.day ?: 1),
+                        Utility.zeroFormatter(dday.month ?: 1)
+                    )
+                    donationInfoHourValue.text = getString(
+                        R.string.donation_info_hour_pattern,
+                        Utility.zeroFormatter(dday.stHour ?: 0),
+                        Utility.zeroFormatter(dday.stMinute ?: 0)
+                    )
+                }
             }
 
             donationInfoBookButton.setOnClickListener {

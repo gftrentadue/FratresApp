@@ -149,9 +149,9 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
             val findValue = donationInMonth.find { donationDay ->
                 Comparator.dayComparator(
                     day.date,
-                    donationDay.day,
-                    donationDay.month,
-                    donationDay.year
+                    donationDay.day ?: 1,
+                    donationDay.month ?: 1,
+                    donationDay.year ?: 1970
                 ) == 0
             }
 

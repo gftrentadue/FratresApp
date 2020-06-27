@@ -12,7 +12,7 @@ const val INTERVAL_START_HOUR = "START_HOUR"
 const val INTERVAL_START_MINUTE = "START_MINUTE"
 const val INTERVAL_FINISH_HOUR = "FINISH_HOUR"
 const val INTERVAL_FINISH_MINUTE = "FINISH_MINUTE"
-const val INTERVAL_USERS = "START_HOUR"
+const val INTERVAL_USERS = "BOOKED_USER"
 
 @Entity(tableName = INTERVAL_TABLE_NAME)
 class DonationInterval(
@@ -31,9 +31,6 @@ class DonationInterval(
     @ColumnInfo(name = INTERVAL_FINISH_MINUTE)
     val intervalFinishMinute: Int? = 0,
 
-    @TypeConverters(UserConverters::class)
     @ColumnInfo(name = INTERVAL_USERS)
     val bookedUser: List<User>? = emptyList()
-) {
-    constructor() : this(Random(32).nextInt(),0, 0, 0, 0, emptyList())
-}
+)

@@ -43,9 +43,6 @@ class DonationDay(
     @ColumnInfo(name = FTMINUTE_COLUMN_NAME)
     val ftMinute: Int? = 1,
 
-    @Embedded
-    @TypeConverters(DonationConverters::class)
+    @ColumnInfo(name = INTERVAL_COLUMN_NAME)
     val intervals: List<DonationInterval>? = emptyList()
-) {
-    constructor() : this(0,1,1,1,"", 1,1,1,1, emptyList())
-}
+)

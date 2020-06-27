@@ -7,26 +7,26 @@ import com.ppspt.ba.fratresapp.model.DonationDay
 import com.ppspt.ba.fratresapp.model.DonationInterval
 import com.ppspt.ba.fratresapp.model.User
 
-object DonationConverters {
+class DonationConverters {
     @TypeConverter
-    fun donationListToJson(list: ArrayList<DonationDay>): String {
+    fun donationListToJson(list: List<DonationDay>): String {
         return Gson().toJson(list)
     }
 
     @TypeConverter
-    fun jsonToDonationList(json: String): ArrayList<DonationDay> {
-        val listType = object : TypeToken<ArrayList<DonationDay>>() {}.type
+    fun jsonToDonationList(json: String): List<DonationDay> {
+        val listType = object : TypeToken<List<DonationDay>>() {}.type
         return Gson().fromJson(json, listType)
     }
 
     @TypeConverter
-    fun donationIntervalToJson(list: ArrayList<DonationInterval>): String {
+    fun donationIntervalToJson(list: List<DonationInterval>): String {
         return Gson().toJson(list)
     }
 
     @TypeConverter
-    fun jsonToDonationIntervals(json: String): ArrayList<DonationInterval> {
-        val listType = object : TypeToken<ArrayList<DonationInterval>>() {}.type
+    fun jsonToDonationIntervals(json: String): List<DonationInterval> {
+        val listType = object : TypeToken<List<DonationInterval>>() {}.type
         return Gson().fromJson(json, listType)
     }
 }

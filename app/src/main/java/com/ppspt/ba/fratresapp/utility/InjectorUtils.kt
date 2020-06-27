@@ -3,6 +3,7 @@ package com.ppspt.ba.fratresapp.utility
 import android.content.Context
 import com.ppspt.ba.fratresapp.db.AppDatabase
 import com.ppspt.ba.fratresapp.repositories.DonationDayRepository
+import com.ppspt.ba.fratresapp.repositories.DonationIntervalRepository
 import com.ppspt.ba.fratresapp.repositories.UserRepository
 import com.ppspt.ba.fratresapp.viewmodel.CalendarViewModelFactory
 import com.ppspt.ba.fratresapp.viewmodel.DonationInfoViewModelFactory
@@ -14,6 +15,12 @@ object InjectorUtils {
 
     private fun getUserRepository(context: Context): UserRepository {
         return UserRepository.getInstance(AppDatabase.getInstance(context).userDao())
+    }
+
+    private fun getDonationIntervalRepository(context: Context): DonationIntervalRepository {
+        return DonationIntervalRepository.getInstance(
+            AppDatabase.getInstance(context).donationIntervalDao()
+        )
     }
 
     fun provideCalendarViewModelFactory(context: Context): CalendarViewModelFactory {
