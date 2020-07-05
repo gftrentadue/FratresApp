@@ -61,6 +61,7 @@ class DonationInfoFragment : Fragment() {
             googleMap = it
 
             mapView.onResume()
+            it.uiSettings.isScrollGesturesEnabled = false
         }
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
@@ -80,7 +81,7 @@ class DonationInfoFragment : Fragment() {
         if (id != -1) {
             viewModel.getDonationFromID(id).observe(viewLifecycleOwner) { dday ->
                 // Set values for book donation
-                if (!dday.intervals.isNullOrEmpty()){
+                if (!dday.intervals.isNullOrEmpty()) {
                     donationInterval = dday.intervals as ArrayList<DonationInterval>
                     donationStartHour = dday.stHour
                     donationFinishHour = dday.ftHour
@@ -222,9 +223,10 @@ class DonationInfoFragment : Fragment() {
         if (::googleMap.isInitialized && donationLocation != null) {
             val marker = MarkerOptions().position(donationLocation)
                 .title(requireContext().getString(R.string.donation_info_donationday_label))
-            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(donationLocation, 17f)
+                .snippet(address)
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(donationLocation, 18f)
 
-            googleMap.addMarker(marker)
+            googleMap.addMarker(marker).showInfoWindow()
             googleMap.moveCamera(cameraUpdate)
         }
     }
