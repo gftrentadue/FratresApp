@@ -303,18 +303,18 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         // TODO: what's happen if donationTime % duration isn't 0?
         val numInterval = donationTime / duration
 
-        var minute = 0
-        var hour = 0
+        var minute = startMinute
+        var hour = startHour
         var intervalStartHour = startHour
         var intervalStartMinute = startMinute
 
         for (i in 0 until numInterval) {
+            minute += duration
+
             if (minute == 60) {
                 minute = 0
                 hour++
             }
-
-            minute += duration
 
             // TODO: id values work because there are the same numInterval for all donation
             intervals.add(
