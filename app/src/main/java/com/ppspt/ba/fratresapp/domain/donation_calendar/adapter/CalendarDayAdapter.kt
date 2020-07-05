@@ -68,6 +68,9 @@ class CalendarDayAdapter(
         private val year = calendar.get(Calendar.YEAR)
 
         fun bind(day: Day, currentMonth: Int?, currentYear: Int?) {
+            // Reset color for month change
+            dayTextView.setTextColor(Color.BLACK)
+
             var donationDayInCurrentMonth = true
 
             calendar.time = day.date
