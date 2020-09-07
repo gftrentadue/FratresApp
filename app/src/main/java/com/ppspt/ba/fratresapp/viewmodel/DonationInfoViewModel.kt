@@ -10,4 +10,8 @@ class DonationInfoViewModel(private val repository: DonationDayRepository) : Vie
     fun getDonationFromID(id: Int): LiveData<DonationDay> {
         return repository.getDonationByID(id)
     }
+
+    fun addBookingForDonation(donationDay: DonationDay): Int {
+        return repository.updateDonation(donationDay)
+    }
 }

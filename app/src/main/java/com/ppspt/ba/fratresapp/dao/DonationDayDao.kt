@@ -19,6 +19,9 @@ interface DonationDayDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(day: List<DonationDay>)
 
+    @Update
+    fun updateDonationDay(donationDay: DonationDay): Int
+
     @Delete
     fun delete(day: DonationDay)
 

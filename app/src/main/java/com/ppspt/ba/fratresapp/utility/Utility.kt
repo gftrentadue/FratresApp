@@ -5,10 +5,12 @@ import android.location.Address
 import android.location.Geocoder
 import android.util.Log
 import com.google.android.gms.maps.model.LatLng
+import com.ppspt.ba.fratresapp.R
+import com.ppspt.ba.fratresapp.model.DonationInterval
 import java.io.IOException
 
 object Utility {
-    fun getLocationFromAddress(context: Context, address: String): LatLng?{
+    fun getLocationFromAddress(context: Context, address: String): LatLng? {
         val coder = Geocoder(context)
         val addressesResult = arrayListOf<Address>()
 
@@ -19,10 +21,10 @@ object Utility {
                 return null
             }
 
-            val location= addressesResult[0]
+            val location = addressesResult[0]
 
             return LatLng(location.latitude, location.longitude)
-        } catch (ioe: IOException){
+        } catch (ioe: IOException) {
             Log.d("UTILITY-GETLOC", ioe.localizedMessage + "\nStacktrace: ${ioe.stackTrace}")
         }
 
@@ -38,5 +40,22 @@ object Utility {
         } else {
             "$number"
         }
+    }
+
+    /**
+     * Format [donationInterval] for chips
+     */
+    fun getPrintableInterval(context: Context, donationInterval: DonationInterval): String {
+        var interval = ""
+        donationInterval.apply {
+            interval = context.resources.getString(
+                R.string.donation_info_interval_pattern,
+                zeroFormatter(intervalStartHour ?: 0),
+                zeroFormatter(intervalStartMinute ?: 0),
+                zeroFormatter(intervalFinishHour ?: 0),
+                zeroFormatter(intervalFinishMinute ?: 0)
+            )
+        }
+        return interval
     }
 }

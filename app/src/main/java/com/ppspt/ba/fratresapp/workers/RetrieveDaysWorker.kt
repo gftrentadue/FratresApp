@@ -33,7 +33,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
     private suspend fun fillDatabase(dao: DonationDayDao) {
         val dayList = arrayListOf<DonationDay>()
         var id = 0
-        var donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+        val donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
         // 05/01/2020 PARROCCHIA SANT'AGOSTINO
         dayList.add(
             DonationDay(
@@ -294,7 +294,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
         finishHour: Int,
         finishMinute: Int,
         duration: Int
-    ): List<DonationInterval> {
+    ): ArrayList<DonationInterval> {
         val intervals = arrayListOf<DonationInterval>()
 
         // Calculate minutes from start time to finish time
@@ -332,7 +332,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
             intervalStartMinute = minute
         }
 
-        return intervals.toList()
+        return intervals
     }
 
 }

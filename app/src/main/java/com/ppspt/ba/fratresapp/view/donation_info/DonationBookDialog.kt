@@ -9,15 +9,30 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
 import com.ppspt.ba.fratresapp.R
+import com.ppspt.ba.fratresapp.model.DonationDay
+import com.ppspt.ba.fratresapp.model.DonationInterval
+import com.ppspt.ba.fratresapp.model.User
+import com.ppspt.ba.fratresapp.utility.Constants
+import com.ppspt.ba.fratresapp.utility.InjectorUtils
+import com.ppspt.ba.fratresapp.utility.Utility
+import com.ppspt.ba.fratresapp.viewmodel.DonationInfoViewModel
 import kotlinx.android.synthetic.main.donation_book_dialog.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class DonationBookDialog(private val selectedInterval: String) : DialogFragment() {
-    // TODO: passing value for selected interval can be done with shared viewmodel
+class DonationBookDialog(private val donationDayId: Int, private val selectedInterval: String) : DialogFragment() {
     private lateinit var chipSelectedListener: IDonationBookChooseListener
-    private var chipSelectedText = ""
+    private var currentSelectedChip = ""
+    private var selectedDonationDay: DonationDay? = null
+
+    private val viewModel: DonationInfoViewModel by viewModels {
+        InjectorUtils.provideDonationInfoViewModelFactory(requireContext())
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog: Dialog = super.onCreateDialog(savedInstanceState)
@@ -58,7 +73,7 @@ class DonationBookDialog(private val selectedInterval: String) : DialogFragment(
 
         donationSetBookButton.isEnabled = false
         donationSetBookButton.setOnClickListener {
-            chipSelectedListener.onDonationIntervalSelected(chipSelectedText)
+            chipSelectedListener.onDonationIntervalSelected(currentSelectedChip)
             dismiss()
         }
 
@@ -66,24 +81,19 @@ class DonationBookDialog(private val selectedInterval: String) : DialogFragment(
             dismiss()
         }
 
-        val intervals = arrayListOf(
-            "08:00 - 08:20",
-            "08:20 - 08:40",
-            "08:40 - 09:00",
-            "09:00 - 09:20",
-            "09:20 - 09:40",
-            "09:40 - 10:00",
-            "10:00 - 10:20",
-            "10:20 - 10:40",
-            "10:40 - 11:00",
-            "11:00 - 11:20",
-            "11:20 - 11:40",
-            "11:40 - 12:00"
-        )
-        setBookIntervals(intervals)
+        viewModel.getDonationFromID(donationDayId).observe(viewLifecycleOwner, Observer { dDay ->
+            dDay?.let {
+                selectedDonationDay = it
+
+                val intervals = it.intervals
+                if (!intervals.isNullOrEmpty()) {
+                    setBookIntervals(intervals)
+                }
+            }
+        })
     }
 
-    private fun setBookIntervals(intervals: ArrayList<String>) {
+    private fun setBookIntervals(intervals: ArrayList<DonationInterval>) {
         // Set ColorStateList for change background color on chip state change
         val chipStates = arrayOf(
             intArrayOf(-android.R.attr.state_selected), intArrayOf(android.R.attr.state_selected),
@@ -117,7 +127,7 @@ class DonationBookDialog(private val selectedInterval: String) : DialogFragment(
 
         for (interval in intervals) {
             chip = Chip(requireContext())
-            chip.text = interval
+            chip.text = Utility.getPrintableInterval(requireContext(), interval)
 
             // Make the chip clickable
             chip.isClickable = true
@@ -144,19 +154,21 @@ class DonationBookDialog(private val selectedInterval: String) : DialogFragment(
             chip.setOnCheckedChangeListener { chipView, isChecked ->
                 val selectedChipText = (chipView as Chip).text.toString()
                 if (isChecked) {
-                    chipSelectedText = selectedChipText
+                    // Save current selected chip to manage chip selection/deselection
+                    currentSelectedChip = selectedChipText
+
                     donationSetBookButton.isEnabled = true
                 } else {
                     // The same chip is deselected
-                    if (chipSelectedText == selectedChipText) {
-                        chipSelectedText = ""
+                    if (currentSelectedChip == selectedChipText) {
+                        currentSelectedChip = ""
                         donationSetBookButton.isEnabled = false
                     }
                 }
             }
 
             // Update checked chip based on previously selected chip
-            if (selectedInterval == interval) {
+            if (selectedInterval == Utility.getPrintableInterval(requireContext(),interval)) {
                 chip.isChecked = true
             }
         }

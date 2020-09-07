@@ -44,5 +44,5 @@ class DonationDay(
     val ftMinute: Int? = 1,
 
     @ColumnInfo(name = INTERVAL_COLUMN_NAME)
-    val intervals: List<DonationInterval>? = emptyList()
+    val intervals: ArrayList<DonationInterval>? = arrayListOf()
 )

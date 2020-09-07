@@ -17,11 +17,16 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.MarkerOptions
 import com.ppspt.ba.fratresapp.R
+import com.ppspt.ba.fratresapp.model.DonationDay
 import com.ppspt.ba.fratresapp.model.DonationInterval
+import com.ppspt.ba.fratresapp.model.User
+import com.ppspt.ba.fratresapp.utility.Constants
 import com.ppspt.ba.fratresapp.utility.InjectorUtils
 import com.ppspt.ba.fratresapp.utility.Utility
 import com.ppspt.ba.fratresapp.viewmodel.DonationInfoViewModel
 import kotlinx.android.synthetic.main.donation_info_fragment.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class DonationInfoFragment : Fragment() {
@@ -31,7 +36,9 @@ class DonationInfoFragment : Fragment() {
 
     private lateinit var googleMap: GoogleMap
 
-    private var donationInterval: ArrayList<DonationInterval>? = null
+    private lateinit var donationDay: DonationDay
+
+    private var donationIntervals: ArrayList<DonationInterval>? = null
     private var donationStartHour: Int? = null
     private var donationFinishHour: Int? = null
 
@@ -79,36 +86,37 @@ class DonationInfoFragment : Fragment() {
 
         val id = args.donationID
         if (id != -1) {
-            viewModel.getDonationFromID(id).observe(viewLifecycleOwner) { dday ->
+            viewModel.getDonationFromID(id).observe(viewLifecycleOwner) { dDay ->
+                donationDay = dDay
                 // Set values for book donation
-                if (!dday.intervals.isNullOrEmpty()) {
-                    donationInterval = dday.intervals as ArrayList<DonationInterval>
-                    donationStartHour = dday.stHour
-                    donationFinishHour = dday.ftHour
+                if (!dDay.intervals.isNullOrEmpty()) {
+                    donationIntervals = dDay.intervals
+                    donationStartHour = dDay.stHour
+                    donationFinishHour = dDay.ftHour
 
                     // Set marker on map
-                    setMarkerOnMap(dday.address ?: "")
+                    setMarkerOnMap(dDay.address ?: "")
 
                     // Set other info
-                    donationInfoAddressValue.text = dday.address
+                    donationInfoAddressValue.text = dDay.address
 
                     donationInfoDayValue.text = getString(
                         R.string.donation_info_day_pattern,
-                        Utility.zeroFormatter(dday.day ?: 1),
-                        Utility.zeroFormatter(dday.month ?: 1)
+                        Utility.zeroFormatter(dDay.day ?: 1),
+                        Utility.zeroFormatter(dDay.month ?: 1)
                     )
                     donationInfoHourValue.text = getString(
                         R.string.donation_info_hour_pattern,
-                        Utility.zeroFormatter(dday.stHour ?: 0),
-                        Utility.zeroFormatter(dday.stMinute ?: 0)
+                        Utility.zeroFormatter(dDay.stHour ?: 0),
+                        Utility.zeroFormatter(dDay.stMinute ?: 0)
                     )
                 }
             }
 
             donationInfoBookButton.setOnClickListener {
-                if (donationInterval != null && donationStartHour != null && donationFinishHour != null) {
+                if (donationIntervals != null && donationStartHour != null && donationFinishHour != null) {
                     Log.d(TAG, "Click on button to book donation")
-                    val dialog = DonationBookDialog(selectedInterval)
+                    val dialog = DonationBookDialog(id, selectedInterval)
                     dialog.setCloseDialogListener(object : IDonationBookChooseListener {
                         override fun onDonationIntervalSelected(interval: String) {
                             // Update selected interval
@@ -167,6 +175,7 @@ class DonationInfoFragment : Fragment() {
                                     1f
                                 )
                                 buttonsConstraint.applyTo(donationInfoButtonsLayout)
+
                             } else {
                                 // Update main visibility
                                 donationInfoSelectedInterval.visibility = View.GONE
@@ -213,6 +222,10 @@ class DonationInfoFragment : Fragment() {
                     dialog.show(parentFragmentManager, "book_intervals_dialog")
                 }
             }
+
+            donationInfoConfirmButton.setOnClickListener {
+                setBookingInterval()
+            }
         }
     }
 
@@ -229,6 +242,59 @@ class DonationInfoFragment : Fragment() {
             googleMap.addMarker(marker).showInfoWindow()
             googleMap.moveCamera(cameraUpdate)
         }
+    }
+
+    private fun setBookingInterval() {
+        if (selectedInterval.isNotEmpty() && !donationIntervals.isNullOrEmpty()) {
+            // Save selectedInterval from chip selection
+            val selectedInterval = donationIntervals!!.firstOrNull { interval ->
+                compareIntervals(interval, selectedInterval)
+            }
+
+            if (selectedInterval != null) {
+                // Create calendar to simulate date of birth
+                val calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault())
+                calendar.set(1980, 1, 1, 0, 0, 0)
+
+                val currentUser = User("Mario", "Rossi", dateOfBirth = calendar.timeInMillis)
+
+                val bookedUser = selectedInterval.bookedUser
+
+                if (bookedUser != null) {
+                    val isAlreadyBooked = bookedUser.indexOf(currentUser) != -1
+
+                    if (!isAlreadyBooked && bookedUser.size < Constants.MAX_BOOKED_USER) {
+                        selectedInterval.bookedUser.add(currentUser)
+                        donationDay.intervals!!.add(selectedInterval)
+                        viewModel.addBookingForDonation(donationDay)
+                    }
+                }
+            }
+
+        }
+    }
+
+    private fun compareIntervals(interval: DonationInterval, stringInterval: String): Boolean {
+        var startCheck = false
+        var finishCheck = false
+
+        val minusSplit = stringInterval.trim().split("-")
+        if (!minusSplit.isNullOrEmpty() && minusSplit.size > 1) {
+            val startColonSplit = minusSplit[0].trim().split(":")
+            val finishColonSplit = minusSplit[1].trim().split(":")
+
+            if (!startColonSplit.isNullOrEmpty() && startColonSplit.size > 1) {
+                startCheck =
+                    startColonSplit[0].toIntOrNull() == interval.intervalStartHour && startColonSplit[1].toIntOrNull() == interval.intervalStartMinute
+            }
+
+            if (!finishColonSplit.isNullOrEmpty() && finishColonSplit.size > 1) {
+                finishCheck =
+                    finishColonSplit[0].toIntOrNull() == interval.intervalFinishHour && finishColonSplit[1].toIntOrNull() == interval.intervalFinishMinute
+            }
+        }
+
+        return startCheck && finishCheck
     }
 
 }

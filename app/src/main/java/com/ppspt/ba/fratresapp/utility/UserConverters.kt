@@ -7,13 +7,13 @@ import com.ppspt.ba.fratresapp.model.User
 
 class UserConverters {
     @TypeConverter
-    fun userListToJson(list: List<User>): String {
+    fun userListToJson(list: ArrayList<User>): String {
         return Gson().toJson(list)
     }
 
     @TypeConverter
-    fun jsonToUserList(json: String): List<User> {
-        val listType = object : TypeToken<List<User>>() {}.type
+    fun jsonToUserList(json: String): ArrayList<User> {
+        val listType = object : TypeToken<ArrayList<User>>() {}.type
         return Gson().fromJson(json, listType)
     }
 }

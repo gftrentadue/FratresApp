@@ -5,7 +5,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ppspt.ba.fratresapp.model.DonationDay
 import com.ppspt.ba.fratresapp.model.DonationInterval
-import com.ppspt.ba.fratresapp.model.User
 
 class DonationConverters {
     @TypeConverter
@@ -20,13 +19,13 @@ class DonationConverters {
     }
 
     @TypeConverter
-    fun donationIntervalToJson(list: List<DonationInterval>): String {
+    fun donationIntervalToJson(list: ArrayList<DonationInterval>): String {
         return Gson().toJson(list)
     }
 
     @TypeConverter
-    fun jsonToDonationIntervals(json: String): List<DonationInterval> {
-        val listType = object : TypeToken<List<DonationInterval>>() {}.type
+    fun jsonToDonationIntervals(json: String): ArrayList<DonationInterval> {
+        val listType = object : TypeToken<ArrayList<DonationInterval>>() {}.type
         return Gson().fromJson(json, listType)
     }
 }

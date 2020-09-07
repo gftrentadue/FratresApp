@@ -32,5 +32,5 @@ class DonationInterval(
     val intervalFinishMinute: Int? = 0,
 
     @ColumnInfo(name = INTERVAL_USERS)
-    val bookedUser: List<User>? = emptyList()
+    val bookedUser: ArrayList<User>? = arrayListOf()
 )

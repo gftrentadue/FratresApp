@@ -1,5 +1,5 @@
 package com.ppspt.ba.fratresapp.utility
 
 object Constants {
-    const val MAX_BOOKED_USER = 8
+    const val MAX_BOOKED_USER = 2
 }
