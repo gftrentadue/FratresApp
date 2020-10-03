@@ -2,6 +2,7 @@ package com.ppspt.ba.fratresapp.custom_view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -45,42 +46,12 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
         monthTextView = layout.findViewById(R.id.monthTextView)
         previousMonthArrow = layout.findViewById(R.id.previousArrowImage)
         previousMonthArrow.setOnClickListener {
-            var currentMonth = calendarToShow.get(Calendar.MONTH) - 1
-            var currentYear = calendarToShow.get(Calendar.YEAR)
-
-            if (currentMonth == 0) {
-                currentMonth = 11
-                currentYear--
-                calendarToShow.set(Calendar.YEAR, currentYear)
-            } else {
-                currentMonth--
-            }
-
-            calendarToShow.set(Calendar.MONTH, currentMonth)
-
-            initCalendar()
-            retrieveDonationDaysInMonth()
-            daysAdapter.setDaysMonth(daysList, currentMonth, currentYear)
+            updateCalendar(isNextToShow = false)
         }
 
         nextMonthArrow = layout.findViewById(R.id.nextArrowImage)
         nextMonthArrow.setOnClickListener {
-            var currentMonth = calendarToShow.get(Calendar.MONTH) - 1
-            var currentYear = calendarToShow.get(Calendar.YEAR)
-
-            if (currentMonth == 11) {
-                currentMonth = 0
-                currentYear++
-                calendarToShow.set(Calendar.YEAR, currentYear)
-            } else {
-                currentMonth++
-            }
-
-            calendarToShow.set(Calendar.MONTH, currentMonth)
-
-            initCalendar()
-            retrieveDonationDaysInMonth()
-            daysAdapter.setDaysMonth(daysList, currentMonth, currentYear)
+            updateCalendar(isNextToShow = true)
         }
 
         daysGrid = layout.findViewById(R.id.daysGrid)
@@ -160,5 +131,38 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
             }
 
         }
+    }
+
+    private fun updateCalendar(isNextToShow: Boolean) {
+        Log.d("AAA", "Current month: ${calendarToShow.get(Calendar.MONTH)}")
+        var currentMonth = calendarToShow.get(Calendar.MONTH) - 1
+        var currentYear = calendarToShow.get(Calendar.YEAR)
+
+        if (isNextToShow) {
+            if (currentMonth == 11) {
+                currentMonth = 0
+                currentYear++
+                calendarToShow.set(Calendar.YEAR, currentYear)
+            } else {
+                currentMonth++
+            }
+        } else {
+            if (currentMonth == 0) {
+                currentMonth = 11
+                currentYear--
+                calendarToShow.set(Calendar.YEAR, currentYear)
+            } else {
+                currentMonth--
+            }
+        }
+
+        calendarToShow.set(Calendar.MONTH, currentMonth)
+        Log.d(
+            "AAA",
+            "Month changed: ${calendarToShow.get(Calendar.MONTH)} CurrentMonth: $currentMonth"
+        )
+        initCalendar()
+        retrieveDonationDaysInMonth()
+        daysAdapter.setDaysMonth(daysList, currentMonth, currentYear)
     }
 }
