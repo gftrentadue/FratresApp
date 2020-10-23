@@ -1,7 +1,8 @@
 package com.ppspt.ba.fratresapp.model
 
-import androidx.room.*
-import com.ppspt.ba.fratresapp.utility.DonationConverters
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 const val DONATION_TABLE_NAME: String = "donation_table"
 const val DAY_COLUMN_NAME: String = "DAY"

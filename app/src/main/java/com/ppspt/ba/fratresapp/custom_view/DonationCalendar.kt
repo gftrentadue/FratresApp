@@ -25,7 +25,7 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
 
     private lateinit var daysAdapter: CalendarDayAdapter
 
-    private val calendarToShow: Calendar =
+    private var calendarToShow: Calendar =
         Calendar.getInstance(TimeZone.getDefault(), Locale.ITALIAN)
 
     private val daysList = arrayListOf<Day>()
@@ -64,22 +64,28 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
             calendarToShow.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
         monthTextView.text = month.toUpperCase(Locale.getDefault())
 
+        // Calculate days missing on month start to complete a week
         val previousWeekMondayOffset: Int = if (calendarToShow.get(Calendar.DAY_OF_WEEK) == 1)
             -6
         else
             Calendar.MONDAY - calendarToShow.get(Calendar.DAY_OF_WEEK)
 
+        // Calculate last day of the month
         val lastMonthDay = calendarToShow.getActualMaximum(Calendar.DAY_OF_MONTH)
 
+        // Move calendar backward to show previous month day
+        // needed to complete first week of the current month
         calendarToShow.add(Calendar.DAY_OF_MONTH, previousWeekMondayOffset)
 
         daysList.clear()
 
+        // Add days to calendar
         for (i in 0 until -previousWeekMondayOffset + lastMonthDay) {
             daysList.add(Day(null, calendarToShow.time))
             calendarToShow.add(Calendar.DAY_OF_MONTH, 1)
         }
 
+        // If current month doesn't end on sunday, add days to complete last week
         if (calendarToShow.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
             val currentDay = calendarToShow.get(Calendar.DAY_OF_WEEK)
             for (i in currentDay..8) {

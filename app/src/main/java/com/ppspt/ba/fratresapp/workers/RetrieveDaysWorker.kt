@@ -9,7 +9,6 @@ import com.ppspt.ba.fratresapp.db.AppDatabase
 import com.ppspt.ba.fratresapp.model.DonationDay
 import com.ppspt.ba.fratresapp.model.DonationInterval
 import kotlinx.coroutines.coroutineScope
-import java.lang.Exception
 
 class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
     CoroutineWorker(context, workerParameters) {
@@ -24,7 +23,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
             fillDatabase(dao)
 
             Result.success()
-        } catch (ex: Exception){
+        } catch (ex: Exception) {
             Log.e("RetrieveDaysWorker", "ERROR: ${ex.message}")
             Result.failure()
         }
@@ -33,7 +32,7 @@ class RetrieveDaysWorker(context: Context, workerParameters: WorkerParameters) :
     private suspend fun fillDatabase(dao: DonationDayDao) {
         val dayList = arrayListOf<DonationDay>()
         var id = 0
-        var donationIntervals = createDonationIntervals(id,8, 0, 12, 0, 20)
+        var donationIntervals = createDonationIntervals(id, 8, 0, 12, 0, 20)
         // 05/01/2020 PARROCCHIA SANT'AGOSTINO
         dayList.add(
             DonationDay(

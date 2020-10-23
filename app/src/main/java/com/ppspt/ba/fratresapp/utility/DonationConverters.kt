@@ -5,7 +5,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ppspt.ba.fratresapp.model.DonationDay
 import com.ppspt.ba.fratresapp.model.DonationInterval
-import com.ppspt.ba.fratresapp.model.User
 
 class DonationConverters {
     @TypeConverter

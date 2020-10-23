@@ -3,9 +3,6 @@ package com.ppspt.ba.fratresapp.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.ppspt.ba.fratresapp.utility.UserConverters
-import kotlin.random.Random
 
 const val INTERVAL_TABLE_NAME = "intervals_table"
 const val INTERVAL_START_HOUR = "START_HOUR"

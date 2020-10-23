@@ -2,8 +2,6 @@ package com.ppspt.ba.fratresapp.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.TypeConverters
-import com.ppspt.ba.fratresapp.utility.UserConverters
 import org.jetbrains.annotations.NotNull
 
 const val USER_TABLE_NAME = "user_table"

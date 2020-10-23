@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.LatLng
 import java.io.IOException
 
 object Utility {
-    fun getLocationFromAddress(context: Context, address: String): LatLng?{
+    fun getLocationFromAddress(context: Context, address: String): LatLng? {
         val coder = Geocoder(context)
         val addressesResult = arrayListOf<Address>()
 
@@ -19,10 +19,10 @@ object Utility {
                 return null
             }
 
-            val location= addressesResult[0]
+            val location = addressesResult[0]
 
             return LatLng(location.latitude, location.longitude)
-        } catch (ioe: IOException){
+        } catch (ioe: IOException) {
             Log.d("UTILITY-GETLOC", ioe.localizedMessage + "\nStacktrace: ${ioe.stackTrace}")
         }
 

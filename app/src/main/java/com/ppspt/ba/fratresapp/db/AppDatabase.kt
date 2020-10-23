@@ -20,7 +20,11 @@ import com.ppspt.ba.fratresapp.workers.RetrieveDaysWorker
 
 const val DATABASE_NAME = "fratres_db"
 
-@Database(entities = [DonationDay::class, User::class, DonationInterval::class], version = 1, exportSchema = false)
+@Database(
+    entities = [DonationDay::class, User::class, DonationInterval::class],
+    version = 1,
+    exportSchema = false
+)
 @TypeConverters(UserConverters::class, DonationConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun donationDayDao(): DonationDayDao

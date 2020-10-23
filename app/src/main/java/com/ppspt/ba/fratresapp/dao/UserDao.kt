@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.TypeConverters
 import com.ppspt.ba.fratresapp.model.User
-import com.ppspt.ba.fratresapp.utility.UserConverters
 
 @Dao
 interface UserDao {

@@ -9,7 +9,7 @@ class DonationDayRepository(private val donationDayDao: DonationDayDao) {
         return donationDayDao.findByID(id)
     }
 
-    fun getAllDonationDays(): LiveData<List<DonationDay>>{
+    fun getAllDonationDays(): LiveData<List<DonationDay>> {
         return donationDayDao.getAll()
     }
 

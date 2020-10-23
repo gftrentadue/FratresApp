@@ -190,6 +190,7 @@ class GridItemDecorator
     companion object {
         val HORIZONTAL = LinearLayout.HORIZONTAL
         val VERTICAL = LinearLayout.VERTICAL
+
         //mainly used for GridLayoutManager
         val ALL = 2
 
