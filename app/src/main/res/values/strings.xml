@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">FratresApp</string>
+
+    <!--DONATION CALENDAR -->
     <string name="donation_calendar_monday_label">Lu</string>
     <string name="donation_calendar_tuesday_label">Ma</string>
     <string name="donation_calendar_wednesday_label">Me</string>
@@ -7,6 +9,9 @@
     <string name="donation_calendar_friday_label">Ve</string>
     <string name="donation_calendar_saturday_label">Sa</string>
     <string name="donation_calendar_sunday_label">Do</string>
+    <string name="donation_calendar_no_donation_message">Nel giorno selezionato non è prevista una donazione.</string>
+
+    <!-- DONATION INFO -->
     <string name="donation_info_donationday_label">Donazione Sangue</string>
     <string name="donation_info_address_label">Donazione presso:</string>
     <string name="donation_info_day_label">Il giorno</string>
@@ -14,10 +19,11 @@
     <string name="donation_info_day_pattern">%1$s/%2$s</string>
     <string name="donation_info_hour_pattern">%1$s:%2$s</string>
     <string name="donation_info_book_donation_text">Prenota la donazione</string>
+    <string name="donation_info_selected_interval_label">L\'intervallo selezionato è: %1$s</string>
+    <string name="donation_info_confirm_book_text">Conferma prenotazione</string>
+
+    <!-- BOOK DONATION DIALOG -->
     <string name="donation_book_label">Seleziona un intervallo in cui vuoi andare a fare la donazione</string>
     <string name="donation_book_title">Intervalli Donazioni</string>
     <string name="donation_set_book_text">Seleziona intervallo</string>
-    <string name="donation_info_selected_interval_label">L\'intervallo selezionato è: %1$s</string>
-    <string name="donation_info_confirm_book_text">Conferma prenotazione</string>
-    <string name="donation_calendar_no_donation_message">Nel giorno selezionato non è prevista una donazione.</string>
 </resources>
