@@ -37,11 +37,6 @@ class DonationInfoFragment : Fragment() {
 
     private var selectedInterval = ""
 
-    companion object {
-        fun newInstance() =
-            DonationInfoFragment()
-    }
-
     private val viewModel: DonationInfoViewModel by viewModels {
         InjectorUtils.provideDonationInfoViewModelFactory(requireContext())
     }

@@ -9,7 +9,7 @@
         android:id="@+id/donationInfoFragment"
         android:name="com.ppspt.ba.fratresapp.view.donation_info.DonationInfoFragment"
         android:label="fragment_donation_info"
-        tools:layout="@layout/donation_info_fragment" >
+        tools:layout="@layout/donation_info_fragment">
 
         <argument
             android:name="donationID"
@@ -19,12 +19,13 @@
 
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="com.ppspt.ba.fratresapp.view.CalendarFragment"
+        android:name="com.ppspt.ba.fratresapp.view.calendar.CalendarFragment"
         android:label="fragment_calendar"
-        tools:layout="@layout/calendar_fragment" >
-        <action android:id="@+id/action_Calendar_to_DonationInfo"
+        tools:layout="@layout/calendar_fragment">
+        <action
+            android:id="@+id/action_Calendar_to_DonationInfo"
             app:destination="@id/donationInfoFragment"
-            app:enterAnim="@anim/nav_default_enter_anim" >
+            app:enterAnim="@anim/nav_default_enter_anim">
 
             <argument
                 android:name="donationID"
@@ -33,4 +34,16 @@
         </action>
 
     </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.ppspt.ba.fratresapp.view.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/profile_fragment" />
+
+    <fragment
+        android:id="@+id/myDonationFragment"
+        android:name="com.ppspt.ba.fratresapp.view.my_donation.MyDonationFragment"
+        android:label="fragment_my_donation"
+        tools:layout="@layout/my_donation_fragment" />
 </navigation>

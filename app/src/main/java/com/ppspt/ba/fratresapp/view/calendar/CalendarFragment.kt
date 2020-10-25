@@ -1,4 +1,4 @@
-package com.ppspt.ba.fratresapp.view
+package com.ppspt.ba.fratresapp.view.calendar
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,10 +17,6 @@ import kotlinx.android.synthetic.main.calendar_fragment.*
 
 class CalendarFragment : Fragment() {
     private val TAG = this::class.java.simpleName
-
-    companion object {
-        fun newInstance() = CalendarFragment()
-    }
 
     private val viewModel: CalendarViewModel by viewModels {
         InjectorUtils.provideCalendarViewModelFactory(requireContext())
@@ -49,9 +45,7 @@ class CalendarFragment : Fragment() {
                 ).show()
             } else {
                 findNavController().navigate(
-                    CalendarFragmentDirections.actionCalendarToDonationInfo(
-                        id
-                    )
+                    CalendarFragmentDirections.actionCalendarToDonationInfo(id)
                 )
             }
         }
