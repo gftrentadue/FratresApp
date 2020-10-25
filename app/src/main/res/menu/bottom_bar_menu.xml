@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/myDonation"
+        android:title="@string/bottom_bar_mydonation_label"
+        android:icon="@drawable/icon_my_donation_state"/>
+
+    <item android:id="@+id/donationCalendar"
+        android:title="@string/bottom_bar_calendar_label"
+        android:icon="@drawable/icon_calendar_state"/>
+
+    <item android:id="@+id/profile"
+        android:title="@string/bottom_bar_profile_label"
+        android:icon="@drawable/icon_profile_state" />
+</menu>

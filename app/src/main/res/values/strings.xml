@@ -26,4 +26,9 @@
     <string name="donation_book_label">Seleziona un intervallo in cui vuoi andare a fare la donazione</string>
     <string name="donation_book_title">Intervalli Donazioni</string>
     <string name="donation_set_book_text">Seleziona intervallo</string>
+
+    <!-- BOTTOM BAR -->
+    <string name="bottom_bar_mydonation_label">Donazioni</string>
+    <string name="bottom_bar_calendar_label">Calendario donazioni</string>
+    <string name="bottom_bar_profile_label">Profilo</string>
 </resources>
