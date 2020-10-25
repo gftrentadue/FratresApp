@@ -33,7 +33,13 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
 
     private lateinit var dayClickListener: (id: Int) -> Unit
 
+    private var currentMonth = 0
+    private var currentYear = 0
+
     init {
+
+        currentMonth = calendarToShow.get(Calendar.MONTH)
+        currentYear = calendarToShow.get(Calendar.YEAR)
 
         initLayout(context)
 
@@ -118,10 +124,10 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
     }
 
     private fun retrieveDonationDaysInMonth() {
-        val currentMonth = calendarToShow.get(Calendar.MONTH)
         val donationInMonth = donationDaysList.filter { donationDay ->
-            donationDay.month == currentMonth
+            donationDay.month == currentMonth + 1
         }
+
         for (day in daysList) {
             val findValue = donationInMonth.find { donationDay ->
                 Comparator.dayComparator(
@@ -140,10 +146,6 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
     }
 
     private fun updateCalendar(isNextToShow: Boolean) {
-        Log.d("AAA", "Current month: ${calendarToShow.get(Calendar.MONTH)}")
-        var currentMonth = calendarToShow.get(Calendar.MONTH) - 1
-        var currentYear = calendarToShow.get(Calendar.YEAR)
-
         if (isNextToShow) {
             if (currentMonth == 11) {
                 currentMonth = 0
@@ -154,19 +156,22 @@ class DonationCalendar(context: Context, attributeSet: AttributeSet) :
             }
         } else {
             if (currentMonth == 0) {
+                // If January, load December of previous year
                 currentMonth = 11
                 currentYear--
                 calendarToShow.set(Calendar.YEAR, currentYear)
+            } else if (currentMonth == 11 && calendarToShow.get(Calendar.YEAR) != currentYear) {
+                // If December and initCalendar mess with year, load November and set again currentYear
+                currentMonth--
+                calendarToShow.set(Calendar.YEAR, currentYear)
             } else {
                 currentMonth--
+
             }
         }
 
         calendarToShow.set(Calendar.MONTH, currentMonth)
-        Log.d(
-            "AAA",
-            "Month changed: ${calendarToShow.get(Calendar.MONTH)} CurrentMonth: $currentMonth"
-        )
+
         initCalendar()
         retrieveDonationDaysInMonth()
         daysAdapter.setDaysMonth(daysList, currentMonth, currentYear)
