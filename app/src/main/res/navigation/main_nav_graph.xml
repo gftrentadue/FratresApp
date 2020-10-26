@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/calendarFragment">
+    app:startDestination="@id/donationCalendar">
 
     <fragment
         android:id="@+id/donationInfoFragment"
@@ -18,7 +18,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/calendarFragment"
+        android:id="@+id/donationCalendar"
         android:name="com.ppspt.ba.fratresapp.view.calendar.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/calendar_fragment">
@@ -36,13 +36,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/profileFragment"
+        android:id="@+id/profile"
         android:name="com.ppspt.ba.fratresapp.view.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/profile_fragment" />
 
     <fragment
-        android:id="@+id/myDonationFragment"
+        android:id="@+id/myDonation"
         android:name="com.ppspt.ba.fratresapp.view.my_donation.MyDonationFragment"
         android:label="fragment_my_donation"
         tools:layout="@layout/my_donation_fragment" />
