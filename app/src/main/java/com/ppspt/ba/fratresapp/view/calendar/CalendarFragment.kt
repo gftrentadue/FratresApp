@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.ppspt.ba.fratresapp.R
+import com.ppspt.ba.fratresapp.databinding.CalendarFragmentBinding
 import com.ppspt.ba.fratresapp.model.DonationDay
 import com.ppspt.ba.fratresapp.utility.InjectorUtils
 import com.ppspt.ba.fratresapp.viewmodel.CalendarViewModel
@@ -22,11 +23,14 @@ class CalendarFragment : Fragment() {
         InjectorUtils.provideCalendarViewModelFactory(requireContext())
     }
 
+    private lateinit var binding: CalendarFragmentBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.calendar_fragment, container, false)
+        binding = CalendarFragmentBinding.inflate(inflater, container, false)
+        return binding.root;
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,7 +40,7 @@ class CalendarFragment : Fragment() {
             calendarView.initDonationDays(it as ArrayList<DonationDay>)
         }
 
-        calendarView.setDayClickListener { id ->
+        binding.calendarView.setDayClickListener { id ->
             if (id == -1) {
                 Toast.makeText(
                     requireContext(),

@@ -17,6 +17,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.MarkerOptions
 import com.ppspt.ba.fratresapp.R
+import com.ppspt.ba.fratresapp.databinding.DonationInfoFragmentBinding
 import com.ppspt.ba.fratresapp.model.DonationInterval
 import com.ppspt.ba.fratresapp.utility.InjectorUtils
 import com.ppspt.ba.fratresapp.utility.Utility
@@ -41,14 +42,16 @@ class DonationInfoFragment : Fragment() {
         InjectorUtils.provideDonationInfoViewModelFactory(requireContext())
     }
 
+    private lateinit var binding: DonationInfoFragmentBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.donation_info_fragment, container, false)
+        binding = DonationInfoFragmentBinding.inflate(inflater, container, false)
 
         // Gets the MapView from the XML layout and creates it
-        mapView = view.findViewById(R.id.donationMapView)
+        mapView = binding.donationMapView
         mapView.onCreate(savedInstanceState)
 
         // Gets to GoogleMap from the MapView and does initialization stuff
@@ -66,7 +69,7 @@ class DonationInfoFragment : Fragment() {
             e.printStackTrace()
         }
 
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
